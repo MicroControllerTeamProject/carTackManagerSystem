@@ -33,7 +33,8 @@ enum RaceStatus : uint8_t
 	traning = 1,
 	qualify = 2,
 	Race = 3,
-	formationLap = 4
+	formationLap = 4,
+	endQualify = 5
 };
 
 LiquidCrystal_I2C lcd(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);  // Set the LCD I2C address, if it's not working try 0x27.
@@ -47,6 +48,9 @@ unsigned long recordBeforeMillis = 0;
 LapStatus lapStatus = LapStatus::pitLane;
 RaceStatus raceStatus = RaceStatus::qualify;
 unsigned long qualifyTimeLimits = 0;
+uint8_t qualifyNumberLaps = 5;
+int8_t lap = -2;
+bool isDisableTone = true;
 
 void setup()
 {
@@ -55,7 +59,7 @@ void setup()
 	pinMode(9, OUTPUT);
 	if (!sensor.init())
 	{
-		Serial.println("Failed to detect and initialize sensor!");
+		Serial.println(F("error sensor!"));
 		while (1) {}
 	}
 	// Start continuous back-to-back mode (take readings as
@@ -65,28 +69,78 @@ void setup()
 	/*sensor.startContinuous();*/
 	sensor.setMeasurementTimingBudget(20000);
 	sensor.startContinuous();
-	lcd.begin(16, 1);   // iInit the LCD for 16 chars 2 lines
-	tone(8, 500, 500);
-	delay(1000);
+	lcd.begin(16, 2);   // iInit the LCD for 16 chars 2 lines
+	lcd.backlight();   // Turn on the backligt (try lcd.noBaklight() to turn it off)
+}
+
+void soundInitQualify()
+{
+	if (isDisableTone) return;
+	tone(8, 500, 50);
+	delay(100);
+	tone(8, 500, 50);
+	delay(100);
+	tone(8, 500, 50);
+	delay(100);
+	noTone(8);
+}
+
+void soundEndQualify()
+{
+	if (isDisableTone) return;
+	tone(8, 400, 4000);
+	delay(3000);
+	noTone(8);
+}
+
+void songToContruct()
+{
+	if (isDisableTone) return;
+	tone(8, 100, 200);
+	delay(200);
+	tone(8, 200, 200);
+	delay(200);
+	tone(8, 500, 200);
+	delay(200);
+	tone(8, 100, 200);
+	delay(200);
+	noTone(8);
+}
+
+void startRaceSounds()
+{
+	tone(8, 500, 1000);
+	delay(2000);
+	tone(8, 500, 1000);
+	delay(2000);
+	tone(8, 500, 1000);
+	delay(2000);
+	tone(8, 1000, 1000);
+	delay(2000);
 	noTone(8);
 }
 
 void detectTransitCar()
 {
 	int distance = sensor.readRangeContinuousMillimeters();
-	if (sensor.timeoutOccurred()) { lcdPrintMessage("sensor error", 0, 4,false); }
+	if (sensor.timeoutOccurred()) { lcdPrintMessage(F("sensor error"), 0, 4,false); }
 	if (distance < 100 && distance > 10)
 	{
-		if (lapStatus == LapStatus::outLap) {
+		if (lapStatus == LapStatus::outLap && lap == qualifyNumberLaps) {
 			lapStatus = LapStatus::finishLine;
 			currentMillis = millis();
+			lap = -2;
 			setRecordsAndDisplayTime();
+			startMillis = 0;
 		}
-		else {
+		//starter for qualify
+		else if(startMillis == 0 && lap >= 0) {
 			startMillis = millis();
 			lapStatus = LapStatus::outLap;
 			lcdPrintMessage(F("out of lap"), 0, 4,true);
+			soundInitQualify();
 		}
+		lap++;
 		digitalWrite(9, HIGH);
 		delay(500);
 	}
@@ -109,6 +163,11 @@ void loop()
 		break;
 	case Race:
 		break;
+	case endQualify:
+		lcdSlideMessage("End qualify session ....");
+		setRecordsAndDisplayTime();
+		delay(5000);
+		break;
 	case formationLap:
 		break;
 	default:
@@ -118,29 +177,44 @@ void loop()
 
 void traningStatusManager()
 {
-	lcdSlideMessage(F("waiting for race!"));
-	
+	lcdSlideMessage(F("Cars in the paddock"));
 }
 
 void qualityStatusManager()
 {
+	if (qualifyTimeLimits != 0 && ((millis() - qualifyTimeLimits) > (5ul * 60ul * 1000ul)))
+	{
+		soundEndQualify();
+		lcdPrintMessage(F("End qualify"), 0, 0, true);
+		raceStatus = RaceStatus::endQualify;
+	/*	setRecordsAndDisplayTime();*/
+		qualifyTimeLimits = 0;
+	}
+
 	switch (lapStatus)
 	{
 	case pitLane:
-		lcdPrintMessage(F("Cars in pit lane."),0,0,false);
+		lcdPrintMessage(F("Cars in pit lane"),0,0,false);
+		lcdPrintMessage(F("Session qualify"),1, 0, false);
 		break;
 	case finishLine:
 		break;
 	case outLap:
 		if (qualifyTimeLimits == 0)
 		{
-			qualifyTimeLimits == millis();
+			qualifyTimeLimits = millis();
+			/*soundInitQualify();*/
 		}
-		else
+	/*	else
 		{
-			if ((millis() - qualifyTimeLimits) > 15 * 60 * 1000);
-			lapStatus = LapStatus::pitLane;
-		}
+			if ((millis() - qualifyTimeLimits) > (1ul*3ul*1000ul))
+			{
+				soundEndQualify();
+				lcdPrintMessage(F("End qualify"), 0, 0, true);
+				lapStatus = LapStatus::pitLane;
+				qualifyTimeLimits = 0;
+			}
+		}*/
 		break;
 	default:
 		break;
@@ -150,51 +224,54 @@ void qualityStatusManager()
 void lcdPrintMessage(String message,uint8_t row,uint8_t col ,bool clear)
 {
 	if(clear) lcd.clear();
-
-	lcd.backlight();   // Turn on the backligt (try lcd.noBaklight() to turn it off)
 	lcd.setCursor(col,row); //First line
 	lcd.print(message);
 }
 
 void lcdSlideMessage(String message) {
-	lcd.begin(16, 1);   // iInit the LCD for 16 chars 2 lines
-	lcd.backlight();   // Turn on the backligt (try lcd.noBaklight() to turn it off)
-	lcd.setCursor(16, 1); //First line
+	lcd.clear();
+	lcd.setCursor(16, 0); //First line
 	lcd.scrollDisplayLeft();
 	lcd.autoscroll();
 	for (int thisChar = 0; thisChar < message.length(); thisChar++) {
 		lcd.print(message.charAt(thisChar));
-		delay(250);
+		delay(300);
 	}
-	delay(2000);
+	delay(1000);
 	lcd.clear();
 }
 
 void setRecordsAndDisplayTime()
 {
-	elapsedMillis = (currentMillis - startMillis);
-
-	/*if (elapsedMillis < 1000) {
-		lcdPrintMessage("reset system",0,0);
-		return;
-	} */
-
-	if (recordMillis == 0){
-		recordMillis = elapsedMillis;
+	if (raceStatus != RaceStatus::endQualify)
+	{
+		elapsedMillis = (currentMillis - startMillis);
+		/*if (elapsedMillis < 1000) {
+			lcdPrintMessage("reset system",0,0);
+			return;
+		} */
+		if (recordMillis == 0) {
+			recordMillis = elapsedMillis;
+		}
+		//when made a record
+		if (elapsedMillis < recordMillis) {
+			recordBeforeMillis = recordMillis;
+			recordMillis = elapsedMillis;
+		}
+		else {
+			elapsedMillis = recordMillis;
+		}
 	}
-	//when made a record
-	if(elapsedMillis < recordMillis){
-		recordBeforeMillis = recordMillis;
-		recordMillis = elapsedMillis;
-	}
-	else{
+	else
+	{
 		elapsedMillis = recordMillis;
 	}
-
+	lcd.begin(16, 2);
+	lcd.clear();
 	lcd.setCursor(0, 0);
-	lcd.print("SW (hh:mm:ss:ms)");
-	lcd.setCursor(0, 1);
-	lcd.print("                ");
+	lcd.print(F("Leclerc Ferr."));
+	
+	/*lcd.print("                ");*/
 
 
 	unsigned long durMS = (elapsedMillis % 1000);       //Milliseconds
