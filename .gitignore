@@ -30,3 +30,16 @@
 *.exe
 *.out
 *.app
+/carTackManagerSystem/.vs/carTackManagerSystem/v16
+/carTackManagerSystem/carTackManagerSystem/__vm
+/carTackManagerSystem/carTackManagerSystem/Debug
+*.filters
+/carTackManagerSystem/.vs/carTackManagerSystem
+/carTackManagerSystem/carTackManagerSystem/ARM/Release
+/carTackManagerSystem/carTackManagerSystem/x64
+/carTackManagerSystem/carTrackUnitTest/Debug
+/carTackManagerSystem/carTrackManagerSystem_FrameworkVersion/Debug
+/carTackManagerSystem/carTrackManagerSystem_FrameworkVersion/__vm
+/carTackManagerSystem/Debug
+/carTackManagerSystem/carTrackUnitTest/x64/Debug
+*.exp
