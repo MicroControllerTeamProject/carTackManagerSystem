@@ -25,7 +25,7 @@ enum LapStatus : uint8_t
 {
 	pitLane = 1,
 	finishLine = 2,
-	outLap = 3
+	outLap = 3,
 };
 
 enum RaceStatus : uint8_t
@@ -34,7 +34,8 @@ enum RaceStatus : uint8_t
 	qualify = 2,
 	Race = 3,
 	formationLap = 4,
-	endQualify = 5
+	endQualify = 5,
+	checkDistanceSensor = 6
 };
 
 LiquidCrystal_I2C lcd(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);  // Set the LCD I2C address, if it's not working try 0x27.
@@ -46,17 +47,22 @@ unsigned long currentMillis = 0;
 unsigned long recordMillis = 0;
 unsigned long recordBeforeMillis = 0;
 LapStatus lapStatus = LapStatus::pitLane;
-RaceStatus raceStatus = RaceStatus::qualify;
+RaceStatus raceStatus = RaceStatus::Race;
 unsigned long qualifyTimeLimits = 0;
 uint8_t qualifyNumberLaps = 5;
-int8_t lap = -2;
-bool isDisableTone = true;
+int8_t lap = 0;
+int8_t lapBeforeQualify = 2;
+bool isDisableTone = false;
+char macchineName[6] = "Ferr.";
+uint8_t  numbersOfTotalRaceLap = 10;
+uint8_t  numbersOfActualRaceLap = 0;
+#define pinLed 9
 
 void setup()
 {
 	Serial.begin(9600);
 	Wire.begin();
-	pinMode(9, OUTPUT);
+	pinMode(pinLed, OUTPUT);
 	if (!sensor.init())
 	{
 		Serial.println(F("error sensor!"));
@@ -88,26 +94,48 @@ void soundInitQualify()
 void soundEndQualify()
 {
 	if (isDisableTone) return;
-	tone(8, 400, 4000);
+	tone(8, 1500, 4000);
 	delay(3000);
 	noTone(8);
 }
 
-void songToContruct()
+void soundPhotoFinish()
 {
 	if (isDisableTone) return;
-	tone(8, 100, 200);
-	delay(200);
-	tone(8, 200, 200);
-	delay(200);
-	tone(8, 500, 200);
-	delay(200);
-	tone(8, 100, 200);
-	delay(200);
+	tone(8, 2000, 50);
+	delay(50);
+	tone(8, 1500, 50);
+	delay(50);
+	tone(8, 2500, 50);
+	delay(50);
+	tone(8, 3000, 50);
+	delay(50);
+	tone(8, 2000, 50);
+	delay(50);
+	tone(8, 1500, 50);
+	delay(50);
+	tone(8, 2500, 50);
+	delay(50);
+	tone(8, 3000, 50);
+	delay(50);
 	noTone(8);
 }
 
-void startRaceSounds()
+//void soundToContruct()
+//{
+//	if (isDisableTone) return;
+//	tone(8, 100, 200);
+//	delay(200);
+//	tone(8, 200, 200);
+//	delay(200);
+//	tone(8, 500, 200);
+//	delay(200);
+//	tone(8, 100, 200);
+//	delay(200);
+//	noTone(8);
+//}
+
+void soundStartRace()
 {
 	tone(8, 500, 1000);
 	delay(2000);
@@ -124,7 +152,7 @@ void detectTransitCar()
 {
 	int distance = sensor.readRangeContinuousMillimeters();
 	if (sensor.timeoutOccurred()) { lcdPrintMessage(F("sensor error"), 0, 4,false); }
-	if (distance < 100 && distance > 10)
+	if ((distance < 100 && distance > 10) )
 	{
 		if (lapStatus == LapStatus::outLap && lap == qualifyNumberLaps) {
 			lapStatus = LapStatus::finishLine;
@@ -162,6 +190,10 @@ void loop()
 		detectTransitCar();
 		break;
 	case Race:
+		if (isCarTransit())
+		{
+			raceManager();
+		}
 		break;
 	case endQualify:
 		lcdSlideMessage("End qualify session ....");
@@ -169,6 +201,8 @@ void loop()
 		delay(5000);
 		break;
 	case formationLap:
+		break;
+	case checkDistanceSensor:
 		break;
 	default:
 		break;
@@ -219,6 +253,54 @@ void qualityStatusManager()
 	default:
 		break;
 	}
+}
+
+void raceManager()
+{
+		String stringToDisplay = macchineName;
+		stringToDisplay.concat("lap. :");
+		stringToDisplay.concat(numbersOfActualRaceLap);
+		lcdPrintMessage(stringToDisplay, 0, 0, true);
+		numbersOfActualRaceLap++;
+		if (numbersOfActualRaceLap == (numbersOfTotalRaceLap - ((numbersOfTotalRaceLap  * 20) / 100)))
+		{
+			soundPhotoFinish();
+		}
+	//else if (carNumber == 2)
+	//{
+	//	String a = "Merc.Lap :";
+	//	a.concat(numbersOfRaceLapSecond);
+	//	lcdPrintMessage(a, 0, 0, true);
+	//	numbersOfRaceLapSecond++;
+	//}
+	if (numbersOfActualRaceLap >= numbersOfTotalRaceLap)
+	{
+		lcd.clear();
+		lcdPrintMessage(F("End race"), 0, 0, false);
+		soundEndQualify();
+		while (1) {};
+	}
+	//if (numbersOfRaceLapSecond >= 5)
+	//{
+	//	lcd.clear();
+	//	lcdPrintMessage(F("Second WIN"), 0, 0, false);
+	//	delay(100000000);
+	//}
+}
+
+bool isCarTransit()
+{
+	if (sensor.timeoutOccurred()) { lcdPrintMessage(F("sensor error"), 0, 4, false); }
+	int distance = sensor.readRangeContinuousMillimeters();
+	if ((distance < 60 && distance > 10))
+	{
+		digitalWrite(9, HIGH);
+		delay(1000);
+		digitalWrite(9, LOW);
+		distance = sensor.readRangeContinuousMillimeters();
+		if(distance > 100) return true;
+	}
+	return false;
 }
 
 void lcdPrintMessage(String message,uint8_t row,uint8_t col ,bool clear)
