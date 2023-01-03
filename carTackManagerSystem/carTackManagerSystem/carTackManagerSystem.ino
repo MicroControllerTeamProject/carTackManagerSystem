@@ -50,11 +50,11 @@ LapStatus lapStatus = LapStatus::pitLane;
 RaceStatus raceStatus = RaceStatus::Race;
 unsigned long qualifyTimeLimits = 0;
 uint8_t qualifyNumberLaps = 5;
-int8_t lap = 0;
+int8_t lap = -2;
 int8_t lapBeforeQualify = 2;
 bool isDisableTone = false;
 char macchineName[6] = "Ferr.";
-uint8_t  numbersOfTotalRaceLap = 10;
+uint8_t  numbersOfTotalRaceLap = 50;
 uint8_t  numbersOfActualRaceLap = 0;
 #define pinLed 9
 
@@ -180,8 +180,6 @@ void detectTransitCar()
 
 void loop()
 {
-	lcdPrintMessage("CIao", 0, 0, true);
-	return;
 	switch (raceStatus)
 	{
 	case traning:
@@ -264,6 +262,10 @@ void raceManager()
 		stringToDisplay.concat(numbersOfActualRaceLap);
 		lcdPrintMessage(stringToDisplay, 0, 0, true);
 		numbersOfActualRaceLap++;
+		if (numbersOfActualRaceLap == 1)
+		{
+			soundPhotoFinish();
+		}
 		if (numbersOfActualRaceLap == (numbersOfTotalRaceLap - ((numbersOfTotalRaceLap  * 20) / 100)))
 		{
 			soundPhotoFinish();
