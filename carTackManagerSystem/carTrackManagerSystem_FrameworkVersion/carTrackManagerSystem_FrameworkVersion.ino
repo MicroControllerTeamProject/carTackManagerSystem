@@ -53,7 +53,6 @@ void setup() {
 
 void loop() {
 	carTrackBusinessLayer->startCompetition();
-	delay(1000);
 	liquidCristalI2cActivity->print("", 0, 0, true);
 	//carTrackBusinessLayer->startCompetition();
 
