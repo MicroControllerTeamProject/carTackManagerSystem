@@ -43,3 +43,7 @@
 /carTackManagerSystem/Debug
 /carTackManagerSystem/carTrackUnitTest/x64/Debug
 *.exp
+/.vs/carTackManagerSystem/v17
+/.vs
+/carTackManagerSystem/carTrackUnitTest/x64/Release
+/carTackManagerSystem/carTrackManagerSystem_FrameworkVersion/Release

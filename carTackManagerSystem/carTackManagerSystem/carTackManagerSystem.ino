@@ -180,6 +180,8 @@ void detectTransitCar()
 
 void loop()
 {
+	lcdPrintMessage("CIao", 0, 0, true);
+	return;
 	switch (raceStatus)
 	{
 	case traning:
