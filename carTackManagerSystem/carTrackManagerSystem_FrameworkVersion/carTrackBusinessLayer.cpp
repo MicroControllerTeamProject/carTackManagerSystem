@@ -28,7 +28,6 @@ bool CarTrackBusinessLayer::isDetectedTransitCar()
 	this->_irObstacleSensorActivity->isObstacleDetected();
 }
 
-
 //void CarTrackBusinessLayer::setRaceConfiguration(AvrMicroRepository& avrMicroRepository)
 //{
 //	if (avrMicroRepository.digitalReadm(RacePin) == HIGH)

@@ -24,7 +24,7 @@ namespace carTrackUnitTest
 			irObstaclePort[0]->alarmTriggerOn = DigitalPort::AlarmOn::high;
 			irObstaclePort[0]->direction = DigitalPort::PortDirection::input;
 
-			IRObstacleSensorActivity* iRObstacleSensorActivity = new IRObstacleSensorActivity(,irObstaclePort,1);
+			IRObstacleSensorActivity* iRObstacleSensorActivity = new IRObstacleSensorActivity(mainRepository,irObstaclePort,1);
 
 			When(Method(mockedAvrMicroRepository, digitalReadm)).AlwaysReturn(1);
 

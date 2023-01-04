@@ -24,8 +24,9 @@
 #include "carTrackBusinessLayer.h"
 #include "commonLayer.h"
 #include <stdint.h>
+
+AvrMicroRepository avrMicroRepository;
 CarTrackBusinessLayer* carTrackBusinessLayer;
-AvrMicroRepository* avrMicroRepository;
 LiquidCristalI2cActivity* liquidCristalI2cActivity;
 LiquidCristalI2CRepository* liquidCristalI2CRepository;
 IRObstacleSensorActivity* irObstacleSensorActivity;
@@ -33,9 +34,11 @@ DigitalPort** irObstaclePorts;
 
 // the setup function runs once when you press reset or power the board
 void setup() {
+	Serial.begin(9600);
+	Serial.println("Start");
+	
 	liquidCristalI2CRepository = new LiquidCristalI2CRepository(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, 0);
 	liquidCristalI2cActivity = new LiquidCristalI2cActivity(liquidCristalI2CRepository, 16, 2);
-	avrMicroRepository = new AvrMicroRepository();
 
 	irObstaclePorts = new DigitalPort * [1];
 	irObstaclePorts[0] = new DigitalPort("irObst1", 7);
@@ -54,8 +57,6 @@ void setup() {
 void loop() {
 	carTrackBusinessLayer->startCompetition();
 	liquidCristalI2cActivity->print("", 0, 0, true);
-	//carTrackBusinessLayer->startCompetition();
-
 	//char d[10] = {};
 	//itoa(getFreeRam(), d, 10);
 	//liquidCristalI2cActivity->print(d, 0, 1, false);
