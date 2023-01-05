@@ -1,10 +1,13 @@
+
+#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\AvrMicroRepository.h"
+#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\model\DigitalPort.h"
+#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\model\AnalogPort.h"
+#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\DeviceActivity.h"
+#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\IRObstacleSensorActivity.h"
+#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\commons\commonsLayer.h"
 #include "pch.h"
 #include "CppUnitTest.h"
 #include "src\extend.h"
-#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\AvrMicroRepository.h"
-#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\model\DigitalPort.h"
-#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\IRObstacleSensorActivity.h"
-#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\commons\commonsLayer.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
