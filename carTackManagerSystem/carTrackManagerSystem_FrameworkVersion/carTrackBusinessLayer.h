@@ -1,6 +1,7 @@
 #pragma once
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\IRObstacleSensorActivity.h"
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\LiquidCristalI2cActivity.h"
+#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\SwitchActivity.h"
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\AvrMicroRepository.h"
 #include "commonLayer.h"
 
@@ -9,7 +10,8 @@ class CarTrackBusinessLayer
 public:
 	CarTrackBusinessLayer(
 		LiquidCristalI2cActivity* liquidCristalI2cActivity,
-		IRObstacleSensorActivity* irObstacleSensorActivity
+		IRObstacleSensorActivity* irObstacleSensorActivity,
+		SwitchActivity* SwitchActivity
 		/*AvrMicroRepository& avrMicroRepository,
 		IRObstacleSensorActivity irObstacleSensorActivity*/);
 
@@ -24,6 +26,7 @@ public:
 private:
 	LiquidCristalI2cActivity* _liquidCristalI2cActivity;
 	IRObstacleSensorActivity* _irObstacleSensorActivity;
+	SwitchActivity* _switchActivity;
 	commonLayer::RaceConfiguration raceConfiguration;
 };
 

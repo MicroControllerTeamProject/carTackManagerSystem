@@ -13,10 +13,12 @@ uint8_t outLapQualifyNumbers = 2;
 unsigned long qualifyTimeLimit = 3 * 60 * 1000;
 
 CarTrackBusinessLayer::CarTrackBusinessLayer(LiquidCristalI2cActivity* liquidCristalI2cActivity,
-	IRObstacleSensorActivity* irObstacleSensorActivity){
+	IRObstacleSensorActivity* irObstacleSensorActivity,SwitchActivity* switchActivity){
 
 	this->_liquidCristalI2cActivity = liquidCristalI2cActivity;
 	this->_irObstacleSensorActivity = irObstacleSensorActivity;
+	this->_switchActivity = switchActivity;
+
 }
 
 void CarTrackBusinessLayer::displayLogo(){
@@ -44,10 +46,21 @@ bool CarTrackBusinessLayer::isDetectedTransitCar()
 //
 void CarTrackBusinessLayer::startCompetition()
 {
+	if (this->_switchActivity->isThereASwitchOn())
+	{
+		
+		this->_liquidCristalI2cActivity->print("switch detected", 0, 0, true);
+		delay(1000);
+		this->_liquidCristalI2cActivity->print(" ", 0, 0, true);
+	}
+
+
 	if (this->_irObstacleSensorActivity->isObstacleDetected())
 	{
 		this->_liquidCristalI2cActivity->print("car detected",0,0,true);
 		delay(1000);
+		this->_liquidCristalI2cActivity->print(" ", 0, 0, true);
+
 	}
 }
 //
