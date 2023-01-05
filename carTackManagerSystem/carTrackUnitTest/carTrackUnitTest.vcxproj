@@ -157,7 +157,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Libraries\lsgNewFramework\activity\DeviceActivity.cpp" />
-    <ClCompile Include="..\..\..\Libraries\lsgNewFramework\activity\IRObstacleSensorActivity.cpp" />
+    <ClCompile Include="..\..\..\Libraries\lsgNewFramework\activity\SwitchActivity.cpp" />
     <ClCompile Include="..\..\..\Libraries\lsgNewFramework\commons\commonsLayer.cpp" />
     <ClCompile Include="..\..\..\Libraries\lsgNewFramework\model\AnalogPort.cpp" />
     <ClCompile Include="..\..\..\Libraries\lsgNewFramework\model\DigitalPort.cpp" />

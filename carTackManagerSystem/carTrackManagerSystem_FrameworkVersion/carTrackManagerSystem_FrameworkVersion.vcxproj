@@ -178,7 +178,6 @@
       <FileType>CppCode</FileType>
       <DeploymentContent>true</DeploymentContent>
     </ClCompile>
-    <ClCompile Include="commonLayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Libraries\lsgNewFramework\activity\BuzzerActivity.h" />
@@ -191,7 +190,6 @@
     <ClInclude Include="..\..\..\Libraries\lsgNewFramework\repository\AvrMicroRepository.h" />
     <ClInclude Include="..\..\..\Libraries\lsgNewFramework\repository\LiquidCristalI2CRepository.h" />
     <ClInclude Include="carTrackBusinessLayer.h" />
-    <ClInclude Include="commonLayer.h" />
     <ClInclude Include="__vm\.carTrackManagerSystem_FrameworkVersion.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>

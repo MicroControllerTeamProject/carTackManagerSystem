@@ -3,7 +3,6 @@
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\LiquidCristalI2cActivity.h"
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\SwitchActivity.h"
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\AvrMicroRepository.h"
-#include "commonLayer.h"
 
 class CarTrackBusinessLayer
 {
@@ -27,6 +26,5 @@ private:
 	LiquidCristalI2cActivity* _liquidCristalI2cActivity;
 	IRObstacleSensorActivity* _irObstacleSensorActivity;
 	SwitchActivity* _switchActivity;
-	commonLayer::RaceConfiguration raceConfiguration;
 };
 

@@ -22,9 +22,8 @@
 #include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\LiquidCristalI2cActivity.h>
 #include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\SwitchActivity.h>
 #include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\model\DigitalPort.h>
-#include "carTrackBusinessLayer.h"
-#include "commonLayer.h"
 #include <stdint.h>
+#include "carTrackBusinessLayer.h"
 
 AvrMicroRepository avrMicroRepository;
 CarTrackBusinessLayer* carTrackBusinessLayer;
