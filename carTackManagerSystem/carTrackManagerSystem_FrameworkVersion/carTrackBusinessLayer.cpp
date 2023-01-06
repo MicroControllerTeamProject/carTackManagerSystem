@@ -1,6 +1,8 @@
 #include "carTrackBusinessLayer.h"
+#include <string.h>
 
-uint8_t lapRaceNumbers = 30;
+uint8_t  numbersOfTotalRaceLap = 50;
+uint8_t  numbersOfActualRaceLap = 0;
 
 CarTrackBusinessLayer::CarTrackBusinessLayer(LiquidCristalI2cActivity* liquidCristalI2cActivity,
 	IRObstacleSensorActivity* irObstacleSensorActivity,SwitchActivity* switchActivity){
@@ -13,10 +15,7 @@ void CarTrackBusinessLayer::displayLogo(){
 	this->_liquidCristalI2cActivity->print("LSG-Software",0,0,true);
 }
 
-bool CarTrackBusinessLayer::isDetectedTransitCar()
-{
-	this->_irObstacleSensorActivity->isObstacleDetected();
-}
+
 
 //void CarTrackBusinessLayer::setRaceConfiguration(AvrMicroRepository& avrMicroRepository)
 //{
@@ -36,26 +35,30 @@ void CarTrackBusinessLayer::startCompetition()
 {
 	if (this->_switchActivity->isThereASwitchOn())
 	{
+		DigitalPort** listOfPorts = this->_switchActivity->getAllDigitalPorts();
+		for (int i = 0; i < this->_switchActivity->digitalPortsNumber; i++)
+		{
+			if (listOfPorts[i]->isOnError && strcmp(listOfPorts[i]->getUid(),"swRace01") == 0)
+			{
+				startRace();
+			}
+		}
 		
-		this->_liquidCristalI2cActivity->print("switch detected", 0, 0, true);
-		this->_switchActivity->avrMicroRepository->delaym(1000);
-		this->_liquidCristalI2cActivity->print(" ", 0, 0, true);
-	}
-
-
-	if (this->_irObstacleSensorActivity->isObstacleDetected())
-	{
-		this->_liquidCristalI2cActivity->print("car detected",0,0,true);
-		this->_switchActivity->avrMicroRepository->delaym(1000);
-		this->_liquidCristalI2cActivity->print(" ", 0, 0, true);
-
 	}
 }
-//
-//void CarTrackBusinessLayer::detectTransitCar(IRObstacleSensorActivity irObstacleSensorActivity,AvrMicroRepository avrMicroRepository)
-//{
-//	irObstacleSensorActivity.isObstacleDetected(avrMicroRepository);
-//}
+
+void CarTrackBusinessLayer::startRace()
+{
+	while (true)
+	{
+		isDetectedTransitCar();
+	}
+}
+
+bool CarTrackBusinessLayer::isDetectedTransitCar()
+{
+	return this->_irObstacleSensorActivity->isObstacleDetected("irObst1");
+}
 
 
 

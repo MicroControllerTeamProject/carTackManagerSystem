@@ -29,9 +29,6 @@ namespace carTrackUnitTest
 			irObstaclePort[0]->alarmTriggerOn = DigitalPort::AlarmOn::high;
 			irObstaclePort[0]->direction = DigitalPort::PortDirection::input;
 
-
-
-
 			/*Mock<AvrMicroRepository> mockedAvrMicroRepository;
 			AvrMicroRepository& mainRepository = mockedAvrMicroRepository.get();
 

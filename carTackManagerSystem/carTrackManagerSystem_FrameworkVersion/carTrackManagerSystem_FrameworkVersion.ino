@@ -40,7 +40,7 @@ void setup() {
 	Serial.println("Start");
 
 	switchPorts = new DigitalPort * [2];
-	switchPorts[0] = new DigitalPort("swtch1", 6);
+	switchPorts[0] = new DigitalPort("swRace01", 6);
 	switchPorts[0]->direction = DigitalPort::PortDirection::input;
 	switchPorts[0]->alarmTriggerOn = DigitalPort::AlarmOn::low;
 	switchPorts[0]->isOnPullUp = true;
@@ -62,19 +62,17 @@ void setup() {
 	irObstacleSensorActivity = new IRObstacleSensorActivity(avrMicroRepository, irObstaclePorts, 1);
 	carTrackBusinessLayer = new CarTrackBusinessLayer(liquidCristalI2cActivity, irObstacleSensorActivity,switchActivity);
 	carTrackBusinessLayer->displayLogo();
+	
 }
 
 
 void loop() {
-	/*if (switchActivity->isThereASwitchOn())
-	{
-		Serial.println("Eccoci");
-	}*/
 	carTrackBusinessLayer->startCompetition();
-	//char d[10] = {};
-	//itoa(getFreeRam(), d, 10);
-	//delay(500);
-	//liquidCristalI2cActivity->print(d, 0, 1, false);
+
+	char d[10] = {};
+	itoa(avrMicroRepository.getFreeRam(), d, 10);
+	/*delay(500);*/
+	liquidCristalI2cActivity->print(d, 0, 1, false);
 }
 
 

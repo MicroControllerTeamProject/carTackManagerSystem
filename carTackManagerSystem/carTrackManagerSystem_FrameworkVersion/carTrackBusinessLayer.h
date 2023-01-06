@@ -17,11 +17,13 @@ public:
 	void displayLogo();
 	bool isDetectedTransitCar();
 	void startCompetition();
+	void startRace();
 /*	void displayLogo(LiquidCristalI2cActivity* liquidCristalI2cActivity);
 	void setRaceConfiguration(AvrMicroRepository& avrMicroRepository);
 	commonLayer::RaceConfiguration getRaceConfiguration();
 
 	void detectTransitCar(IRObstacleSensorActivity irObstacleSensorActivity,*/ /*AvrMicroRepository avrMicroRepository);*/
+	void detectTransitCar();
 private:
 	LiquidCristalI2cActivity* _liquidCristalI2cActivity;
 	IRObstacleSensorActivity* _irObstacleSensorActivity;
