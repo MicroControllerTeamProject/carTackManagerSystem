@@ -1,10 +1,11 @@
 
-#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\AvrMicroRepository.h>
+#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\AvrMicroRepository.h"
+#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\LiquidCristalI2CRepository.h"
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\model\DigitalPort.h"
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\model\AnalogPort.h"
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\SwitchActivity.h"
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\IRObstacleSensorActivity.h"
-
+#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\LiquidCristalI2cActivity.h"
 
 #include "pch.h"
 #include "CppUnitTest.h"

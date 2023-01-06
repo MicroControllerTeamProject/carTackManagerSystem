@@ -38,7 +38,7 @@ void CarTrackBusinessLayer::startCompetition()
 	{
 		
 		this->_liquidCristalI2cActivity->print("switch detected", 0, 0, true);
-		delay(1000);
+		this->_switchActivity->avrMicroRepository->delaym(1000);
 		this->_liquidCristalI2cActivity->print(" ", 0, 0, true);
 	}
 
@@ -46,7 +46,7 @@ void CarTrackBusinessLayer::startCompetition()
 	if (this->_irObstacleSensorActivity->isObstacleDetected())
 	{
 		this->_liquidCristalI2cActivity->print("car detected",0,0,true);
-		delay(1000);
+		this->_switchActivity->avrMicroRepository->delaym(1000);
 		this->_liquidCristalI2cActivity->print(" ", 0, 0, true);
 
 	}
