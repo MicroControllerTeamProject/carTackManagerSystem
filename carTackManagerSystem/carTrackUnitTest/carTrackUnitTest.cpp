@@ -3,6 +3,7 @@
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\model\DigitalPort.h"
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\model\AnalogPort.h"
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\SwitchActivity.h"
+#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\IRObstacleSensorActivity.h"
 
 
 #include "pch.h"
@@ -26,6 +27,8 @@ namespace carTrackUnitTest
 			irObstaclePort[0] = new DigitalPort("IrOb1", 4);
 			irObstaclePort[0]->alarmTriggerOn = DigitalPort::AlarmOn::high;
 			irObstaclePort[0]->direction = DigitalPort::PortDirection::input;
+
+
 
 
 			/*Mock<AvrMicroRepository> mockedAvrMicroRepository;

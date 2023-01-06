@@ -169,7 +169,7 @@
     <DebuggerFlavor>VisualMicroDebugger</DebuggerFlavor>
   </PropertyGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Libraries\lsgNewFramework\activity\BuzzerActivity.cpp" />
+    <ClCompile Include="..\..\..\Libraries\lsgNewFramework\activity\IRObstacleSensorActivity.cpp" />
     <ClCompile Include="..\..\..\Libraries\lsgNewFramework\activity\SwitchActivity.cpp" />
     <ClCompile Include="..\..\..\Libraries\lsgNewFramework\model\AnalogPort.cpp" />
     <ClCompile Include="..\..\..\Libraries\lsgNewFramework\model\DigitalPort.cpp" />
@@ -180,10 +180,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Libraries\lsgNewFramework\activity\BuzzerActivity.h" />
     <ClInclude Include="..\..\..\Libraries\lsgNewFramework\activity\DeviceActivity.h" />
     <ClInclude Include="..\..\..\Libraries\lsgNewFramework\activity\IRObstacleSensorActivity.h" />
-    <ClInclude Include="..\..\..\Libraries\lsgNewFramework\activity\LiquidCristalI2cActivity.h" />
     <ClInclude Include="..\..\..\Libraries\lsgNewFramework\activity\SwitchActivity.h" />
     <ClInclude Include="..\..\..\Libraries\lsgNewFramework\model\AnalogPort.h" />
     <ClInclude Include="..\..\..\Libraries\lsgNewFramework\model\DigitalPort.h" />
@@ -194,8 +192,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Libraries\lsgNewFramework\activity\DeviceActivity.cpp" />
-    <ClCompile Include="..\..\..\Libraries\lsgNewFramework\activity\IRObstacleSensorActivity.cpp" />
-    <ClCompile Include="..\..\..\Libraries\lsgNewFramework\activity\LiquidCristalI2cActivity.cpp" />
     <ClCompile Include="..\..\..\Libraries\lsgNewFramework\repository\LiquidCristalI2CRepository.cpp" />
     <ClCompile Include="carTrackBusinessLayer.cpp" />
   </ItemGroup>

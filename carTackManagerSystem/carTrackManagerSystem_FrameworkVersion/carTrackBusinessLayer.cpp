@@ -1,24 +1,12 @@
 #include "carTrackBusinessLayer.h"
 
-
-#define RacePin 5
-#define QualifyPin 6
-
-uint8_t lapQualifyNumbers = 5;
 uint8_t lapRaceNumbers = 30;
-
-uint8_t outLapRaceNumbers = 2;
-uint8_t outLapQualifyNumbers = 2;
-
-unsigned long qualifyTimeLimit = 3 * 60 * 1000;
 
 CarTrackBusinessLayer::CarTrackBusinessLayer(LiquidCristalI2cActivity* liquidCristalI2cActivity,
 	IRObstacleSensorActivity* irObstacleSensorActivity,SwitchActivity* switchActivity){
-
 	this->_liquidCristalI2cActivity = liquidCristalI2cActivity;
 	this->_irObstacleSensorActivity = irObstacleSensorActivity;
 	this->_switchActivity = switchActivity;
-
 }
 
 void CarTrackBusinessLayer::displayLogo(){

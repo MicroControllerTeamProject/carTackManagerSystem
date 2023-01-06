@@ -18,20 +18,20 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\AvrMicroRepository.h>
-#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\LiquidCristalI2CRepository.h>
-#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\LiquidCristalI2cActivity.h>
+//#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\LiquidCristalI2CRepository.h>
+//#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\LiquidCristalI2cActivity.h>
 #include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\SwitchActivity.h>
 #include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\model\DigitalPort.h>
 #include <stdint.h>
 #include "carTrackBusinessLayer.h"
 
 AvrMicroRepository avrMicroRepository;
-CarTrackBusinessLayer* carTrackBusinessLayer;
-LiquidCristalI2cActivity* liquidCristalI2cActivity;
-LiquidCristalI2CRepository* liquidCristalI2CRepository;
-IRObstacleSensorActivity* irObstacleSensorActivity;
+//CarTrackBusinessLayer* carTrackBusinessLayer;
+//LiquidCristalI2cActivity* liquidCristalI2cActivity;
+//LiquidCristalI2CRepository* liquidCristalI2CRepository;
+//IRObstacleSensorActivity* irObstacleSensorActivity;
 SwitchActivity* switchActivity;
-DigitalPort** irObstaclePorts;
+//DigitalPort** irObstaclePorts;
 DigitalPort** switchPorts;
 
 // the setup function runs once when you press reset or power the board
@@ -51,7 +51,7 @@ void setup() {
 
 	switchActivity = new SwitchActivity(avrMicroRepository, switchPorts, 2);
 
-	liquidCristalI2CRepository = new LiquidCristalI2CRepository(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, 0);
+	/*liquidCristalI2CRepository = new LiquidCristalI2CRepository(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, 0);
 	liquidCristalI2cActivity = new LiquidCristalI2cActivity(liquidCristalI2CRepository, 16, 2);
 
 	irObstaclePorts = new DigitalPort * [1];
@@ -61,16 +61,16 @@ void setup() {
 	irObstaclePorts[0]->isOnPullUp = true;
 	irObstacleSensorActivity = new IRObstacleSensorActivity(avrMicroRepository, irObstaclePorts, 1);
 	carTrackBusinessLayer = new CarTrackBusinessLayer(liquidCristalI2cActivity, irObstacleSensorActivity,switchActivity);
-	carTrackBusinessLayer->displayLogo();
+	carTrackBusinessLayer->displayLogo();*/
 }
 
 
 void loop() {
-	//if (switchActivity->isThereASwitchOn())
-	//{
-	//	Serial.println("Eccoci");
-	//}
-	carTrackBusinessLayer->startCompetition();
+	if (switchActivity->isThereASwitchOn())
+	{
+		Serial.println("Eccoci");
+	}
+	/*carTrackBusinessLayer->startCompetition();*/
 	//char d[10] = {};
 	//itoa(getFreeRam(), d, 10);
 	//delay(500);
