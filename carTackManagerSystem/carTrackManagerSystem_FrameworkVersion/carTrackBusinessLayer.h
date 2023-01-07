@@ -1,7 +1,7 @@
 #pragma once
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\IRObstacleSensorActivity.h"
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\LiquidCristalI2cActivity.h"
-#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\SwitchActivity.h"
+//#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\SwitchActivity.h"
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\AvrMicroRepository.h"
 
 class CarTrackBusinessLayer
@@ -9,24 +9,13 @@ class CarTrackBusinessLayer
 public:
 	CarTrackBusinessLayer(
 		LiquidCristalI2cActivity* liquidCristalI2cActivity,
-		IRObstacleSensorActivity* irObstacleSensorActivity,
-		SwitchActivity* SwitchActivity
-		/*AvrMicroRepository& avrMicroRepository,
-		IRObstacleSensorActivity irObstacleSensorActivity*/);
-
+		IRObstacleSensorActivity* irObstacleSensorActivity);
 	void displayLogo();
 	bool isDetectedTransitCar();
 	void startCompetition();
 	void startRace();
-/*	void displayLogo(LiquidCristalI2cActivity* liquidCristalI2cActivity);
-	void setRaceConfiguration(AvrMicroRepository& avrMicroRepository);
-	commonLayer::RaceConfiguration getRaceConfiguration();
-
-	void detectTransitCar(IRObstacleSensorActivity irObstacleSensorActivity,*/ /*AvrMicroRepository avrMicroRepository);*/
-	void detectTransitCar();
 private:
 	LiquidCristalI2cActivity* _liquidCristalI2cActivity;
 	IRObstacleSensorActivity* _irObstacleSensorActivity;
-	SwitchActivity* _switchActivity;
 };
 
