@@ -12,7 +12,7 @@ CarTrackBusinessLayer::CarTrackBusinessLayer(LiquidCristalI2cActivity* liquidCri
 }
 
 void CarTrackBusinessLayer::displayLogo(){
-	this->_liquidCristalI2cActivity->print("LSG-Software",0,0,true);
+	this->_liquidCristalI2cActivity->print("LSG-Software",0,0,true,0);
 }
 
 
@@ -51,7 +51,11 @@ void CarTrackBusinessLayer::startRace()
 {
 	while (true)
 	{
-		isDetectedTransitCar();
+		if (isDetectedTransitCar())
+		{
+			this->_liquidCristalI2cActivity->print("car detected",0,0,true,500);
+			this->_liquidCristalI2cActivity->print(" ", 0, 0, true,0);
+		}
 	}
 }
 

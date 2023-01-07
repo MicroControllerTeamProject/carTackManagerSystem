@@ -18,9 +18,11 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\AvrMicroRepository.h>
+#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\RFReceiverRepository.h>
 //#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\LiquidCristalI2CRepository.h>
 //#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\LiquidCristalI2cActivity.h>
 #include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\SwitchActivity.h>
+#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\RFReceiverActivity.h>
 #include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\model\DigitalPort.h>
 #include <stdint.h>
 #include "carTrackBusinessLayer.h"
@@ -33,6 +35,9 @@ IRObstacleSensorActivity* irObstacleSensorActivity;
 SwitchActivity* switchActivity;
 DigitalPort** irObstaclePorts;
 DigitalPort** switchPorts;
+
+RFReceiverRepository rep(4, 99, 100);
+RFReceiverActivity* rfReceiverActivity = new RFReceiverActivity(rep);
 
 // the setup function runs once when you press reset or power the board
 void setup() {
@@ -62,17 +67,30 @@ void setup() {
 	irObstacleSensorActivity = new IRObstacleSensorActivity(avrMicroRepository, irObstaclePorts, 1);
 	carTrackBusinessLayer = new CarTrackBusinessLayer(liquidCristalI2cActivity, irObstacleSensorActivity,switchActivity);
 	carTrackBusinessLayer->displayLogo();
-	
+	rep.begin();
 }
 
-
+bool check = false;
 void loop() {
-	carTrackBusinessLayer->startCompetition();
-
-	char d[10] = {};
-	itoa(avrMicroRepository.getFreeRam(), d, 10);
-	/*delay(500);*/
-	liquidCristalI2cActivity->print(d, 0, 1, false);
+	
+	if (rfReceiverActivity->isGotMessage("B0") && check == false)
+	{
+		Serial.println("beccato");
+		delay(1000);
+		rep.stop();
+		check = true;
+	}
+	
+	if (check)
+	{
+		carTrackBusinessLayer->startCompetition();
+		char d[10] = {};
+		itoa(avrMicroRepository.getFreeRam(), d, 10);
+		/*delay(500);*/
+		liquidCristalI2cActivity->print(d, 0, 1, false, 0);
+		rep.begin();
+		check = false;
+	}
 }
 
 
