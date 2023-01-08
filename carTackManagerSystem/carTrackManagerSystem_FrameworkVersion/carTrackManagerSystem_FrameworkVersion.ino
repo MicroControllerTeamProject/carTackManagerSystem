@@ -42,7 +42,7 @@ RFReceiverActivity* rfReceiverActivity = new RFReceiverActivity(rfReceiverReposi
 // the setup function runs once when you press reset or power the board
 void setup() {
 	Serial.begin(9600);
-	Serial.println("Start");
+	Serial.println(F("Start"));
 
 	/*switchPorts = new DigitalPort * [2];
 	switchPorts[0] = new DigitalPort("swRace01", 6);
@@ -71,22 +71,23 @@ void setup() {
 }
 
 bool check = false;
+
 void loop() {
-	
 	if (rfReceiverActivity->isGotMessage("B0") && check == false)
 	{
 		rfReceiverActivity->stop();
+		delay(200);
 		check = true;
 	}
-	
+
 	if (check)
 	{
 		liquidCristalI2cActivity->print("Race Started!", 0, 0, true, 0);
-		char d[10] = {};
-		itoa(avrMicroRepository.getFreeRam(), d, 10);
+		/*char d[10] = {};
+		itoa(avrMicroRepository.getFreeRam(), d, 10);*/
 		/*delay(500);*/
-		liquidCristalI2cActivity->print("Memory :", 0, 1, false, 0);
-		liquidCristalI2cActivity->print(d, 9, 1, false, 0);
+		/*liquidCristalI2cActivity->print("Memory :", 0, 1, false, 0);
+		liquidCristalI2cActivity->print(d, 9, 1, false, 0);*/
 		carTrackBusinessLayer->startCompetition();
 		rfReceiverActivity->begin();
 		check = false;

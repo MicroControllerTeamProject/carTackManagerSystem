@@ -1,18 +1,36 @@
 #include "carTrackBusinessLayer.h"
 #include <string.h>
+#include <stdlib.h>
 
-uint8_t  numbersOfTotalRaceLap = 50;
+
+uint8_t  numbersOfTotalRaceLap = 5;
 uint8_t  numbersOfActualRaceLap = 0;
 
 CarTrackBusinessLayer::CarTrackBusinessLayer(LiquidCristalI2cActivity* liquidCristalI2cActivity,
-	IRObstacleSensorActivity* irObstacleSensorActivity){
+	IRObstacleSensorActivity* irObstacleSensorActivity/*,SwitchActivity* switchActivity*/){
 	this->_liquidCristalI2cActivity = liquidCristalI2cActivity;
 	this->_irObstacleSensorActivity = irObstacleSensorActivity;
+
 }
 
 void CarTrackBusinessLayer::displayLogo(){
 	this->_liquidCristalI2cActivity->print("LSG-Software",0,0,true,0);
 }
+
+//void CarTrackBusinessLayer::setRaceConfiguration(AvrMicroRepository& avrMicroRepository)
+//{
+//	if (avrMicroRepository.digitalReadm(RacePin) == HIGH)
+//	{
+//		this->raceConfiguration = commonLayer::RaceConfiguration::Race;
+//	}
+//	this->raceConfiguration = commonLayer::RaceConfiguration::Traning;
+//}
+//
+//commonLayer::RaceConfiguration CarTrackBusinessLayer::getRaceConfiguration()
+//{
+//	return this->raceConfiguration;
+//}
+//
 
 void CarTrackBusinessLayer::startCompetition()
 {
@@ -25,8 +43,12 @@ void CarTrackBusinessLayer::startRace()
 	{
 		if (isDetectedTransitCar())
 		{
-			this->_liquidCristalI2cActivity->print("car detected",0,0,true,500);
-			this->_liquidCristalI2cActivity->print(" ", 0, 0, true,0);
+			char laps[10] = {};
+			numbersOfActualRaceLap++;
+			itoa((int)numbersOfActualRaceLap, laps, 10);
+			this->_liquidCristalI2cActivity->print("                ", 0, 1, false, 0);
+			this->_liquidCristalI2cActivity->print("lap : ",0,1,false,0);
+			this->_liquidCristalI2cActivity->print(laps, 7, 1, false, 500);
 		}
 	}
 }
