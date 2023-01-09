@@ -19,10 +19,11 @@
 #include <LiquidCrystal_I2C.h>
 #include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\AvrMicroRepository.h>
 #include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\RFReceiverRepository.h>
-//#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\LiquidCristalI2CRepository.h>
-//#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\LiquidCristalI2cActivity.h>
-//#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\SwitchActivity.h>
+#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\LiquidCristalI2CRepository.h>
+#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\LiquidCristalI2cActivity.h>
+#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\SwitchActivity.h>
 #include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\RFReceiverActivity.h>
+#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\BuzzerActivity.h>
 #include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\model\DigitalPort.h>
 #include <stdint.h>
 #include "carTrackBusinessLayer.h"
@@ -32,9 +33,12 @@ CarTrackBusinessLayer* carTrackBusinessLayer;
 LiquidCristalI2cActivity* liquidCristalI2cActivity;
 LiquidCristalI2CRepository* liquidCristalI2CRepository;
 IRObstacleSensorActivity* irObstacleSensorActivity;
-//SwitchActivity* switchActivity;
+BuzzerActivity* buzzerActivity;
+
+SwitchActivity* switchActivity;
 DigitalPort** irObstaclePorts;
-//DigitalPort** switchPorts;
+DigitalPort** switchPorts;
+DigitalPort** buzzerPorts;
 
 RFReceiverRepository rfReceiverRepository(4, 99, 100);
 RFReceiverActivity* rfReceiverActivity = new RFReceiverActivity(rfReceiverRepository);
@@ -44,17 +48,12 @@ void setup() {
 	Serial.begin(9600);
 	Serial.println(F("Start"));
 
-	/*switchPorts = new DigitalPort * [2];
+	switchPorts = new DigitalPort * [2];
 	switchPorts[0] = new DigitalPort("swRace01", 6);
 	switchPorts[0]->direction = DigitalPort::PortDirection::input;
 	switchPorts[0]->alarmTriggerOn = DigitalPort::AlarmOn::low;
 	switchPorts[0]->isOnPullUp = true;
-	switchPorts[1] = new DigitalPort("swtch2", 10);
-	switchPorts[1]->direction = DigitalPort::PortDirection::input;
-	switchPorts[1]->alarmTriggerOn = DigitalPort::AlarmOn::low;
-	switchPorts[1]->isOnPullUp = true;
-
-	switchActivity = new SwitchActivity(avrMicroRepository, switchPorts, 2);*/
+	switchActivity = new SwitchActivity(avrMicroRepository, switchPorts, 2);
 
 	liquidCristalI2CRepository = new LiquidCristalI2CRepository(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, 0);
 	liquidCristalI2cActivity = new LiquidCristalI2cActivity(liquidCristalI2CRepository, 16, 2);
@@ -65,33 +64,47 @@ void setup() {
 	irObstaclePorts[0]->alarmTriggerOn = DigitalPort::AlarmOn::low;
 	irObstaclePorts[0]->isOnPullUp = true;
 	irObstacleSensorActivity = new IRObstacleSensorActivity(avrMicroRepository, irObstaclePorts, 1);
-	carTrackBusinessLayer = new CarTrackBusinessLayer(liquidCristalI2cActivity, irObstacleSensorActivity/*,switchActivity*/);
+
+	buzzerPorts = new DigitalPort * [1];
+	buzzerPorts[0] = new DigitalPort("buzz01", 8);
+	buzzerPorts[0]->direction = DigitalPort::PortDirection::output;
+
+	buzzerActivity = new BuzzerActivity(avrMicroRepository, buzzerPorts, 1);
+	
+	carTrackBusinessLayer = new CarTrackBusinessLayer(liquidCristalI2cActivity, 
+		irObstacleSensorActivity,
+		switchActivity,
+		rfReceiverActivity,buzzerActivity);
 	carTrackBusinessLayer->displayLogo();
-	rfReceiverActivity->begin();
 }
 
 bool check = false;
 
 void loop() {
-	if (rfReceiverActivity->isGotMessage("B0") && check == false)
+	if (carTrackBusinessLayer->isReceivedStartCommand())
 	{
-		rfReceiverActivity->stop();
-		delay(200);
-		check = true;
+		//Serial.println("Eccoci");
+		carTrackBusinessLayer->startRace();
 	}
 
-	if (check)
-	{
-		liquidCristalI2cActivity->print("Race Started!", 0, 0, true, 0);
-		/*char d[10] = {};
-		itoa(avrMicroRepository.getFreeRam(), d, 10);*/
-		/*delay(500);*/
-		/*liquidCristalI2cActivity->print("Memory :", 0, 1, false, 0);
-		liquidCristalI2cActivity->print(d, 9, 1, false, 0);*/
-		carTrackBusinessLayer->startCompetition();
-		rfReceiverActivity->begin();
-		check = false;
-	}
+	//if (rfReceiverActivity->isGotMessage("B0") && check == false)
+	//{
+	//	rfReceiverActivity->stop();
+	//	delay(200);
+	//	check = true;
+	//}
+	//if (check)
+	//{
+	//	liquidCristalI2cActivity->print("Race Started!", 0, 0, true, 0);
+	//	/*char d[10] = {};
+	//	itoa(avrMicroRepository.getFreeRam(), d, 10);*/
+	//	/*delay(500);*/
+	//	/*liquidCristalI2cActivity->print("Memory :", 0, 1, false, 0);
+	//	liquidCristalI2cActivity->print(d, 9, 1, false, 0);*/
+	//	carTrackBusinessLayer->startCompetition();
+	//	rfReceiverActivity->begin();
+	//	check = false;
+	//}
 }
 
 
