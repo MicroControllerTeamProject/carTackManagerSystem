@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 
-uint8_t  numbersOfTotalRaceLap = 10;
+uint8_t  numbersOfTotalRaceLap = 50;
 uint8_t  numbersOfActualRaceLap = 0;
 
 CarTrackBusinessLayer::CarTrackBusinessLayer(LiquidCristalI2cActivity* liquidCristalI2cActivity,
@@ -21,21 +21,6 @@ CarTrackBusinessLayer::CarTrackBusinessLayer(LiquidCristalI2cActivity* liquidCri
 void CarTrackBusinessLayer::displayLogo(){
 	this->_liquidCristalI2cActivity->print("LSG-Software",0,0,true,0);
 }
-
-//void CarTrackBusinessLayer::setRaceConfiguration(AvrMicroRepository& avrMicroRepository)
-//{
-//	if (avrMicroRepository.digitalReadm(RacePin) == HIGH)
-//	{
-//		this->raceConfiguration = commonLayer::RaceConfiguration::Race;
-//	}
-//	this->raceConfiguration = commonLayer::RaceConfiguration::Traning;
-//}
-//
-//commonLayer::RaceConfiguration CarTrackBusinessLayer::getRaceConfiguration()
-//{
-//	return this->raceConfiguration;
-//}
-//
 
 void CarTrackBusinessLayer::startCompetition()
 {
@@ -83,8 +68,6 @@ bool CarTrackBusinessLayer::isReceivedStartCommand()
 	}
 	return false;
 }
-
-
 
 bool CarTrackBusinessLayer::isDetectedTransitCar()
 {

@@ -28,6 +28,11 @@
 #include <stdint.h>
 #include "carTrackBusinessLayer.h"
 
+#define RF433_RX_PIN 4
+#define RACE_SWITCH_PIN 6
+#define IR_OSTACLE_PIN 7
+#define BUZZER_PIN 8
+
 AvrMicroRepository avrMicroRepository;
 CarTrackBusinessLayer* carTrackBusinessLayer;
 LiquidCristalI2cActivity* liquidCristalI2cActivity;
@@ -40,37 +45,38 @@ DigitalPort** irObstaclePorts;
 DigitalPort** switchPorts;
 DigitalPort** buzzerPorts;
 
-RFReceiverRepository rfReceiverRepository(4, 99, 100);
+RFReceiverRepository rfReceiverRepository(RF433_RX_PIN, 99, 100);
 RFReceiverActivity* rfReceiverActivity = new RFReceiverActivity(rfReceiverRepository);
 
 // the setup function runs once when you press reset or power the board
 void setup() {
-	Serial.begin(9600);
-	Serial.println(F("Start"));
 
-	switchPorts = new DigitalPort * [2];
-	switchPorts[0] = new DigitalPort("swRace01", 6);
+	switchPorts = new DigitalPort * [1];
+	switchPorts[0] = new DigitalPort("swRace01", RACE_SWITCH_PIN);
 	switchPorts[0]->direction = DigitalPort::PortDirection::input;
 	switchPorts[0]->alarmTriggerOn = DigitalPort::AlarmOn::low;
 	switchPorts[0]->isOnPullUp = true;
-	switchActivity = new SwitchActivity(avrMicroRepository, switchPorts, 2);
+	switchActivity = new SwitchActivity(avrMicroRepository, switchPorts, 1);
+
 
 	liquidCristalI2CRepository = new LiquidCristalI2CRepository(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, 0);
 	liquidCristalI2cActivity = new LiquidCristalI2cActivity(liquidCristalI2CRepository, 16, 2);
 
+
 	irObstaclePorts = new DigitalPort * [1];
-	irObstaclePorts[0] = new DigitalPort("irObst1", 7);
+	irObstaclePorts[0] = new DigitalPort("irObst1", IR_OSTACLE_PIN);
 	irObstaclePorts[0]->direction = DigitalPort::PortDirection::input;
 	irObstaclePorts[0]->alarmTriggerOn = DigitalPort::AlarmOn::low;
 	irObstaclePorts[0]->isOnPullUp = true;
 	irObstacleSensorActivity = new IRObstacleSensorActivity(avrMicroRepository, irObstaclePorts, 1);
 
 	buzzerPorts = new DigitalPort * [1];
-	buzzerPorts[0] = new DigitalPort("buzz01", 8);
+	buzzerPorts[0] = new DigitalPort("buzz01", BUZZER_PIN);
 	buzzerPorts[0]->direction = DigitalPort::PortDirection::output;
-
+	buzzerPorts[0]->isEnable = false;
 	buzzerActivity = new BuzzerActivity(avrMicroRepository, buzzerPorts, 1);
 	
+
 	carTrackBusinessLayer = new CarTrackBusinessLayer(liquidCristalI2cActivity, 
 		irObstacleSensorActivity,
 		switchActivity,
@@ -83,7 +89,6 @@ bool check = false;
 void loop() {
 	if (carTrackBusinessLayer->isReceivedStartCommand())
 	{
-		//Serial.println("Eccoci");
 		carTrackBusinessLayer->startRace();
 	}
 
