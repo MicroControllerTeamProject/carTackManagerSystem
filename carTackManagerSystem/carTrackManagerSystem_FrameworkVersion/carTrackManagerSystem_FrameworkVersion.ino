@@ -25,6 +25,7 @@
 #include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\RFReceiverActivity.h>
 #include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\BuzzerActivity.h>
 #include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\model\DigitalPort.h>
+#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\interfaces\IntrefaceObstacleSensor.h>
 #include <stdint.h>
 #include "CarTrackBusinessLayer.h"
 
@@ -78,7 +79,7 @@ void setup() {
 	
 
 	carTrackBusinessLayer = new CarTrackBusinessLayer(liquidCristalI2cActivity, 
-		irObstacleSensorActivity,
+		(IntrefaceObstacleSensor)*irObstacleSensorActivity,
 		switchActivity,
 		rfReceiverActivity,buzzerActivity);
 	carTrackBusinessLayer->displayLogo();

@@ -10,6 +10,7 @@
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\LiquidCristalI2cActivity.h"
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\RFReceiverActivity.h"
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\BuzzerActivity.h"
+#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\interfaces\IntrefaceObstacleSensor.h"
 #include "..\carTrackManagerSystem_FrameworkVersion\CarTrackBusinessLayer.h"
 
 #include "pch.h"
@@ -40,12 +41,12 @@ namespace carTrackUnitTest
 			irObstaclePort[1]->direction = DigitalPort::PortDirection::input;
 
 
-			When(Method(mockedAvrMicroRepository, digitalReadm)).AlwaysReturn(1);
+			When(Method(mockedAvrMicroRepository, digitalReadm)).AlwaysReturn(0);
 			When(Method(mockedAvrMicroRepository, pinMode_m)).AlwaysReturn();
 			
 			IRObstacleSensorActivity* iRObstacleSensorActivity = new IRObstacleSensorActivity(mainRepository,irObstaclePort,2);
 
-			bool z = iRObstacleSensorActivity->isObstacleDetected("IrOb1");
+			bool z = ((IntrefaceObstacleSensor)*iRObstacleSensorActivity).isObstacleDetected("IrOb1");
 
 			Assert::AreEqual(true, z);
 		}

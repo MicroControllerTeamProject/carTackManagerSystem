@@ -12,7 +12,7 @@ class CarTrackBusinessLayer
 public:
 	CarTrackBusinessLayer(
 		LiquidCristalI2cActivity* liquidCristalI2cActivity,
-		IRObstacleSensorActivity* irObstacleSensorActivity,
+		IntrefaceObstacleSensor irObstacleSensorActivity,
 		SwitchActivity* switchActivity,
 		RFReceiverActivity* rfReceiverActivity,
 		BuzzerActivity* buzzerActivity
@@ -24,7 +24,7 @@ public:
 	bool isReceivedStartCommand();
 private:
 	LiquidCristalI2cActivity* _liquidCristalI2cActivity;
-	IRObstacleSensorActivity* _irObstacleSensorActivity;
+	IntrefaceObstacleSensor* _irObstacleSensorActivity;
 	SwitchActivity* _switchActivity;
 	RFReceiverActivity* _rfReceiverActivity;
 	BuzzerActivity* _buzzerActivity;

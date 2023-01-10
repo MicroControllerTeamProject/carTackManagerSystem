@@ -8,12 +8,12 @@ uint8_t  numbersOfTotalRaceLap = 50;
 uint8_t  numbersOfActualRaceLap = 0;
 
 CarTrackBusinessLayer::CarTrackBusinessLayer(LiquidCristalI2cActivity* liquidCristalI2cActivity,
-	IRObstacleSensorActivity* irObstacleSensorActivity,SwitchActivity* switchActivity,
+	IntrefaceObstacleSensor irObstacleSensorActivity,SwitchActivity* switchActivity,
 	RFReceiverActivity* rfReceiverActivity,
 	BuzzerActivity* buzzerActivity){
 
 	this->_liquidCristalI2cActivity = liquidCristalI2cActivity;
-	this->_irObstacleSensorActivity = irObstacleSensorActivity;
+	this->_irObstacleSensorActivity = &irObstacleSensorActivity;
 	this->_switchActivity = switchActivity;
 	this->_rfReceiverActivity = rfReceiverActivity;
 	this->_buzzerActivity = buzzerActivity;
