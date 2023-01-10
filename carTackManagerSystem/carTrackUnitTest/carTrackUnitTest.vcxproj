@@ -108,7 +108,7 @@
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -156,13 +156,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\Libraries\lsgNewFramework\activity\BuzzerActivity.cpp" />
     <ClCompile Include="..\..\..\Libraries\lsgNewFramework\activity\DeviceActivity.cpp" />
     <ClCompile Include="..\..\..\Libraries\lsgNewFramework\activity\IRObstacleSensorActivity.cpp" />
     <ClCompile Include="..\..\..\Libraries\lsgNewFramework\activity\LiquidCristalI2cActivity.cpp" />
+    <ClCompile Include="..\..\..\Libraries\lsgNewFramework\activity\RFReceiverActivity.cpp" />
     <ClCompile Include="..\..\..\Libraries\lsgNewFramework\activity\SwitchActivity.cpp" />
     <ClCompile Include="..\..\..\Libraries\lsgNewFramework\commons\commonsLayer.cpp" />
     <ClCompile Include="..\..\..\Libraries\lsgNewFramework\model\AnalogPort.cpp" />
     <ClCompile Include="..\..\..\Libraries\lsgNewFramework\model\DigitalPort.cpp" />
+    <ClCompile Include="..\carTrackManagerSystem_FrameworkVersion\CarTrackBusinessLayer.cpp" />
     <ClCompile Include="carTrackUnitTest.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

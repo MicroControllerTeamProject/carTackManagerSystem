@@ -1,6 +1,7 @@
-#include "carTrackBusinessLayer.h"
+#include "CarTrackBusinessLayer.h"
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 
 uint8_t  numbersOfTotalRaceLap = 50;
@@ -43,7 +44,8 @@ void CarTrackBusinessLayer::startRace()
 			}
 			char laps[10] = {};
 			numbersOfActualRaceLap++;
-			itoa((int)numbersOfActualRaceLap, laps, 10);
+			sprintf(laps,"%d", numbersOfActualRaceLap);
+			/*itoa((int)numbersOfActualRaceLap, laps, 10);*/
 			this->_liquidCristalI2cActivity->print("                ", 0, 1, false, 0);
 			this->_liquidCristalI2cActivity->print("lap : ",0,1,false,0);
 			this->_liquidCristalI2cActivity->print(laps, 7, 1, false, 500);
