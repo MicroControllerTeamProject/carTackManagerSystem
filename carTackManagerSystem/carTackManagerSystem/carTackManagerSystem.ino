@@ -68,6 +68,9 @@ void setup()
 		Serial.println(F("error sensor!"));
 		while (1) {}
 	}
+
+	Serial.print("sensor.getAddress() : " ); Serial.println(sensor.getAddress());
+
 	// Start continuous back-to-back mode (take readings as
 	// fast as possible).  To use continuous timed mode
 	// instead, provide a desired inter-measurement period in

@@ -15,6 +15,7 @@
 //extern int __brkval;
 //int temp;
 
+#include <VL53L0X.h>
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\AvrMicroRepository.h>
@@ -25,7 +26,7 @@
 #include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\RFReceiverActivity.h>
 #include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\BuzzerActivity.h>
 #include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\model\DigitalPort.h>
-#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\interfaces\IntrefaceObstacleSensor.h>
+#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\interfaces\InterfaceObstacleActivity.h>
 #include <stdint.h>
 #include "CarTrackBusinessLayer.h"
 
@@ -70,7 +71,6 @@ void setup() {
 	irObstaclePorts[0]->alarmTriggerOn = DigitalPort::AlarmOn::low;
 	irObstaclePorts[0]->isOnPullUp = true;
 	irObstacleSensorActivity = new IRObstacleSensorActivity(avrMicroRepository, irObstaclePorts, 1);
-
 	buzzerPorts = new DigitalPort * [1];
 	buzzerPorts[0] = new DigitalPort("buzz01", BUZZER_PIN);
 	buzzerPorts[0]->direction = DigitalPort::PortDirection::output;
@@ -79,7 +79,7 @@ void setup() {
 	
 
 	carTrackBusinessLayer = new CarTrackBusinessLayer(liquidCristalI2cActivity, 
-		(IntrefaceObstacleSensor)*irObstacleSensorActivity,
+		irObstacleSensorActivity,
 		switchActivity,
 		rfReceiverActivity,buzzerActivity);
 	carTrackBusinessLayer->displayLogo();

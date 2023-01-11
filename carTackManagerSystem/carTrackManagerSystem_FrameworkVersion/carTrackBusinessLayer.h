@@ -5,6 +5,7 @@
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\RFReceiverActivity.h"
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\BuzzerActivity.h"
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\AvrMicroRepository.h"
+#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\interfaces\InterfaceObstacleActivity.h"
 
 
 class CarTrackBusinessLayer
@@ -12,7 +13,7 @@ class CarTrackBusinessLayer
 public:
 	CarTrackBusinessLayer(
 		LiquidCristalI2cActivity* liquidCristalI2cActivity,
-		IntrefaceObstacleSensor irObstacleSensorActivity,
+		InterfaceObstacleActivity* irObstacleSensorActivity,
 		SwitchActivity* switchActivity,
 		RFReceiverActivity* rfReceiverActivity,
 		BuzzerActivity* buzzerActivity
@@ -24,7 +25,7 @@ public:
 	bool isReceivedStartCommand();
 private:
 	LiquidCristalI2cActivity* _liquidCristalI2cActivity;
-	IntrefaceObstacleSensor* _irObstacleSensorActivity;
+	InterfaceObstacleActivity* _interfaceObstacleActivity;
 	SwitchActivity* _switchActivity;
 	RFReceiverActivity* _rfReceiverActivity;
 	BuzzerActivity* _buzzerActivity;

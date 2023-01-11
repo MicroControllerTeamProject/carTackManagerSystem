@@ -8,12 +8,12 @@ uint8_t  numbersOfTotalRaceLap = 50;
 uint8_t  numbersOfActualRaceLap = 0;
 
 CarTrackBusinessLayer::CarTrackBusinessLayer(LiquidCristalI2cActivity* liquidCristalI2cActivity,
-	IntrefaceObstacleSensor irObstacleSensorActivity,SwitchActivity* switchActivity,
+	InterfaceObstacleActivity* irObstacleSensorActivity,SwitchActivity* switchActivity,
 	RFReceiverActivity* rfReceiverActivity,
 	BuzzerActivity* buzzerActivity){
 
 	this->_liquidCristalI2cActivity = liquidCristalI2cActivity;
-	this->_irObstacleSensorActivity = &irObstacleSensorActivity;
+	this->_interfaceObstacleActivity = irObstacleSensorActivity;
 	this->_switchActivity = switchActivity;
 	this->_rfReceiverActivity = rfReceiverActivity;
 	this->_buzzerActivity = buzzerActivity;
@@ -73,7 +73,7 @@ bool CarTrackBusinessLayer::isReceivedStartCommand()
 
 bool CarTrackBusinessLayer::isDetectedTransitCar()
 {
-	return this->_irObstacleSensorActivity->isObstacleDetected("irObst1");
+	return this->_interfaceObstacleActivity->isObstacleDetected("irObst1");
 }
 
 
