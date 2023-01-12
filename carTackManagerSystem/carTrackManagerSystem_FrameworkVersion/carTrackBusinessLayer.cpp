@@ -35,7 +35,7 @@ void CarTrackBusinessLayer::startRace()
 	this->_buzzerActivity->alarm3(2);
 	while (numbersOfActualRaceLap < numbersOfTotalRaceLap)
 	{
-		
+			
 		if (isDetectedTransitCar())
 		{
 			if (numbersOfActualRaceLap == 0)
@@ -54,6 +54,8 @@ void CarTrackBusinessLayer::startRace()
 				this->_buzzerActivity->alarm1(2);
 			}
 		}
+		char d[10] = {};
+		this->_switchActivity->avrMicroRepository->print_m("ram : ",false); this->_switchActivity->avrMicroRepository->print_m(itoa(this->_switchActivity->avrMicroRepository->getFreeRam(), d, 10), true);
 	}
 	numbersOfActualRaceLap = 0;
 	this->_liquidCristalI2cActivity->print("Race finished!", 0, 0, true, 0);

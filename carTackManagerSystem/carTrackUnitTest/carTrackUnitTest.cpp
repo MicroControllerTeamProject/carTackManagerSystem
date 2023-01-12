@@ -30,7 +30,7 @@ namespace carTrackUnitTest
 			Mock<AvrMicroRepository> mockedAvrMicroRepository;
 			AvrMicroRepository& mainRepository = mockedAvrMicroRepository.get();
 
-			DigitalPort** irObstaclePort = new  DigitalPort *[2];
+			DigitalPort* irObstaclePort[2];
 			irObstaclePort[0] = new DigitalPort("IrOb1", 4);
 			irObstaclePort[0]->alarmTriggerOn = DigitalPort::AlarmOn::low;
 			irObstaclePort[0]->direction = DigitalPort::PortDirection::input;
@@ -44,7 +44,7 @@ namespace carTrackUnitTest
 			When(Method(mockedAvrMicroRepository, digitalReadm)).AlwaysReturn(0);
 			When(Method(mockedAvrMicroRepository, pinMode_m)).AlwaysReturn();
 			
-			InterfaceObstacleActivity* iRObstacleSensorActivity = new IRObstacleSensorActivity(mainRepository,irObstaclePort,2);
+			InterfaceObstacleActivity* iRObstacleSensorActivity = new IRObstacleSensorActivity(mainRepository,irObstaclePort);
 
 			bool z = (iRObstacleSensorActivity->isObstacleDetected("IrOb1"));
 
