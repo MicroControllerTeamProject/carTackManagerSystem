@@ -72,11 +72,10 @@ void setup() {
 	irObstaclePorts[0]->alarmTriggerOn = DigitalPort::AlarmOn::low;
 	irObstaclePorts[0]->isOnPullUp = true;
 
-	IRObstacleSensor* irObstacleSensor = new IRObstacleSensor(irObstaclePorts);
+	IRObstacleSensor* irObstacleSensor[1]; 
+	irObstacleSensor[0] = new IRObstacleSensor(irObstaclePorts);
 
-	//irObstacleSensorActivity = new IRObstacleSensorActivity(avrMicroRepository, irObstacleSensor->getAllDigitalPorts());
-
-	irObstacleSensorActivity = new IRObstacleSensorActivity(avrMicroRepository, irObstacleSensor);
+	irObstacleSensorActivity = new IRObstacleSensorActivity(avrMicroRepository, irObstacleSensor[0]);
 
 	buzzerPorts[0] = new DigitalPort("buzz01", BUZZER_PIN);
 	buzzerPorts[0]->direction = DigitalPort::PortDirection::output;
