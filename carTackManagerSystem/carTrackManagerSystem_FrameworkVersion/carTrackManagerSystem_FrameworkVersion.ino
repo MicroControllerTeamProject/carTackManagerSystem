@@ -54,6 +54,8 @@ DigitalPort* buzzerPorts[1];
 RFReceiverRepository rfReceiverRepository(RF433_RX_PIN, 99, 100);
 RFReceiverActivity* rfReceiverActivity = new RFReceiverActivity(rfReceiverRepository);
 
+IRObstacleSensor* irObstacleSensor[5]{};
+
 // the setup function runs once when you press reset or power the board
 void setup() {
 	Serial.println("RESTART");
@@ -72,10 +74,12 @@ void setup() {
 	irObstaclePorts[0]->alarmTriggerOn = DigitalPort::AlarmOn::low;
 	irObstaclePorts[0]->isOnPullUp = true;
 
-	IRObstacleSensor* irObstacleSensor[1]; 
+	
 	irObstacleSensor[0] = new IRObstacleSensor(irObstaclePorts);
+	irObstacleSensor[0]->setUid("racLap01");
+	irObstacleSensor[0]->enable(true);
 
-	irObstacleSensorActivity = new IRObstacleSensorActivity(avrMicroRepository, irObstacleSensor[0]);
+	irObstacleSensorActivity = new IRObstacleSensorActivity(avrMicroRepository,(IDigitalPorts**)irObstacleSensor);
 
 	buzzerPorts[0] = new DigitalPort("buzz01", BUZZER_PIN);
 	buzzerPorts[0]->direction = DigitalPort::PortDirection::output;
