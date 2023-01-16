@@ -46,7 +46,7 @@ BuzzerActivity* buzzerActivity;
 
 SwitchActivity* switchActivity;
 
-DigitalPort* irObstaclePorts[1];
+DigitalPort* irObstaclePorts[2];
 DigitalPort* switchPorts[1];
 DigitalPort* buzzerPorts[1];
 
@@ -54,7 +54,7 @@ DigitalPort* buzzerPorts[1];
 RFReceiverRepository rfReceiverRepository(RF433_RX_PIN, 99, 100);
 RFReceiverActivity* rfReceiverActivity = new RFReceiverActivity(rfReceiverRepository);
 
-IRObstacleSensor* irObstacleSensor[5]{};
+IRObstacleSensor* irObstacleSensor[1]{};
 
 // the setup function runs once when you press reset or power the board
 void setup() {
@@ -69,17 +69,22 @@ void setup() {
 	liquidCristalI2CRepository = new LiquidCristalI2CRepository(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, 0);
 	liquidCristalI2cActivity = new LiquidCristalI2cActivity(liquidCristalI2CRepository, 16, 2);
 
-	irObstaclePorts[0] = new DigitalPort("irObst1", IR_OSTACLE_PIN);
+	irObstaclePorts[0] = new DigitalPort("irObstPort1", IR_OSTACLE_PIN);
 	irObstaclePorts[0]->direction = DigitalPort::PortDirection::input;
 	irObstaclePorts[0]->alarmTriggerOn = DigitalPort::AlarmOn::low;
 	irObstaclePorts[0]->isOnPullUp = true;
 
-	
-	irObstacleSensor[0] = new IRObstacleSensor(irObstaclePorts);
-	irObstacleSensor[0]->setUid("racLap01");
+	irObstaclePorts[1] = new DigitalPort("irObstPort2", IR_OSTACLE_PIN);
+	irObstaclePorts[1]->direction = DigitalPort::PortDirection::input;
+	irObstaclePorts[1]->alarmTriggerOn = DigitalPort::AlarmOn::low;
+	irObstaclePorts[1]->isOnPullUp = true;
+
+
+	irObstacleSensor[0] = new IRObstacleSensor(irObstaclePorts,sizeof(irObstaclePorts) / sizeof(irObstaclePorts[0]));
+	irObstacleSensor[0]->setUid("Obs.Sens.01");
 	irObstacleSensor[0]->enable(true);
 
-	irObstacleSensorActivity = new IRObstacleSensorActivity(avrMicroRepository,(IDigitalPorts**)irObstacleSensor);
+	irObstacleSensorActivity = new IRObstacleSensorActivity(avrMicroRepository,(IDigitalPorts**)irObstacleSensor,(sizeof(irObstacleSensor)/sizeof(irObstacleSensor[0])));
 
 	buzzerPorts[0] = new DigitalPort("buzz01", BUZZER_PIN);
 	buzzerPorts[0]->direction = DigitalPort::PortDirection::output;

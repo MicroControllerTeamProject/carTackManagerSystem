@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#ifdef _DEBUG
+#include <Arduino.h>
+#endif
 
 uint8_t  numbersOfTotalRaceLap = 50;
 uint8_t  numbersOfActualRaceLap = 0;
@@ -54,8 +57,10 @@ void CarTrackBusinessLayer::startRace()
 				this->_buzzerActivity->alarm1(2);
 			}
 		}
+#ifdef _DEBUG
 		char d[10] = {};
-		this->_switchActivity->avrMicroRepository->print_m("ram : ",false); this->_switchActivity->avrMicroRepository->print_m(itoa(this->_switchActivity->avrMicroRepository->getFreeRam(), d, 10), true);
+		Serial.print("ram:"); Serial.println(itoa(this->_switchActivity->avrMicroRepository->getFreeRam(), d, 10));
+#endif
 	}
 	numbersOfActualRaceLap = 0;
 	this->_liquidCristalI2cActivity->print("Race finished!", 0, 0, true, 0);
@@ -75,7 +80,7 @@ bool CarTrackBusinessLayer::isReceivedStartCommand()
 
 bool CarTrackBusinessLayer::isDetectedTransitCar()
 {
-	return this->_interfaceObstacleActivity->isObstacleDetected("irObst1");
+	return this->_interfaceObstacleActivity->isObstacleDetected("irObstPort1");
 }
 
 
