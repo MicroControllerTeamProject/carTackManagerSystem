@@ -20,6 +20,9 @@ CarTrackBusinessLayer::CarTrackBusinessLayer(LiquidCristalI2cActivity* liquidCri
 	this->_switchActivity = switchActivity;
 	this->_rfReceiverActivity = rfReceiverActivity;
 	this->_buzzerActivity = buzzerActivity;
+
+
+
 }
 
 void CarTrackBusinessLayer::displayLogo(){
@@ -57,10 +60,10 @@ void CarTrackBusinessLayer::startRace()
 				this->_buzzerActivity->alarm1(2);
 			}
 		}
-#ifdef _DEBUG
-		char d[10] = {};
-		Serial.print("ram:"); Serial.println(itoa(this->_switchActivity->avrMicroRepository->getFreeRam(), d, 10));
-#endif
+//#ifdef _DEBUG
+//		char d[10] = {};
+//		Serial.print("ram:"); Serial.println(itoa(this->_switchActivity->avrMicroRepository->getFreeRam(), d, 10));
+//#endif
 	}
 	numbersOfActualRaceLap = 0;
 	this->_liquidCristalI2cActivity->print("Race finished!", 0, 0, true, 0);
