@@ -175,7 +175,7 @@
     <ClCompile Include="..\..\..\Libraries\lsgNewFramework\model\AnalogPort.cpp" />
     <ClCompile Include="..\..\..\Libraries\lsgNewFramework\model\DigitalPort.cpp" />
     <ClCompile Include="..\..\..\Libraries\lsgNewFramework\objectsSensor\I2COstacleSensor.cpp" />
-    <ClCompile Include="..\..\..\Libraries\lsgNewFramework\objectsSensor\IRObstacleSensor.cpp" />
+    <ClCompile Include="..\..\..\Libraries\lsgNewFramework\objectsSensor\DigitalPortSensor.cpp" />
     <ClCompile Include="..\..\..\Libraries\lsgNewFramework\repository\AvrMicroRepository.cpp" />
     <ClCompile Include="..\..\..\Libraries\lsgNewFramework\repository\VL53L0XRepository.cpp" />
     <ClCompile Include="CarTrackManagerSystem_FrameworkVersion.ino">
@@ -188,13 +188,11 @@
     <ClInclude Include="..\..\..\Libraries\lsgNewFramework\activity\IRObstacleSensorActivity.h" />
     <ClInclude Include="..\..\..\Libraries\lsgNewFramework\activity\VL53L0XActivity.h" />
     <ClInclude Include="..\..\..\Libraries\lsgNewFramework\commons\commonsLayer.h" />
-    <ClInclude Include="..\..\..\Libraries\lsgNewFramework\interfaces\IDigitalPorts.h" />
-    <ClInclude Include="..\..\..\Libraries\lsgNewFramework\interfaces\II2CObjectSensor.h" />
     <ClInclude Include="..\..\..\Libraries\lsgNewFramework\interfaces\InterfaceObstacleActivity.h" />
     <ClInclude Include="..\..\..\Libraries\lsgNewFramework\model\AnalogPort.h" />
     <ClInclude Include="..\..\..\Libraries\lsgNewFramework\model\DigitalPort.h" />
     <ClInclude Include="..\..\..\Libraries\lsgNewFramework\objectsSensor\I2COstacleSensor.h" />
-    <ClInclude Include="..\..\..\Libraries\lsgNewFramework\objectsSensor\IRObstacleSensor.h" />
+    <ClInclude Include="..\..\..\Libraries\lsgNewFramework\objectsSensor\DigitalPortSensor.h" />
     <ClInclude Include="..\..\..\Libraries\lsgNewFramework\repository\AvrMicroRepository.h" />
     <ClInclude Include="..\..\..\Libraries\lsgNewFramework\repository\VL53L0XRepository.h" />
     <ClInclude Include="CarTrackBusinessLayer.h" />

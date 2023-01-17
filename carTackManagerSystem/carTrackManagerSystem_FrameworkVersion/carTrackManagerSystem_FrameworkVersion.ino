@@ -28,7 +28,7 @@
 #include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\model\DigitalPort.h>
 #include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\interfaces\InterfaceObstacleActivity.h>
 #include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\interfaces\IDigitalPorts.h>
-#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\objectsSensor\IRObstacleSensor.h>
+#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\objectsSensor\DigitalPortSensor.h>
 #include <stdint.h>
 #include "CarTrackBusinessLayer.h"
 
@@ -43,7 +43,7 @@ IRObstacleSensorActivity* irObstacleSensorActivity;
 
 DigitalPort* irObstaclePorts[2];
 
-IRObstacleSensor* irObstacleSensor[1]{};
+DigitalPortSensor* irObstacleSensor[1]{};
 
 // the setup function runs once when you press reset or power the board
 void setup() {
@@ -60,11 +60,11 @@ void setup() {
 	irObstaclePorts[1]->isOnPullUp = true;
 
 
-	irObstacleSensor[0] = new IRObstacleSensor(irObstaclePorts,sizeof(irObstaclePorts) / sizeof(irObstaclePorts[0]));
+	irObstacleSensor[0] = new DigitalPortSensor(irObstaclePorts,sizeof(irObstaclePorts) / sizeof(irObstaclePorts[0]));
 	irObstacleSensor[0]->setUid("Obs.Sens.01");
 	irObstacleSensor[0]->enable(true);
 
-	irObstacleSensorActivity = new IRObstacleSensorActivity(avrMicroRepository,(IDigitalPort**)irObstacleSensor,(sizeof(irObstacleSensor)/sizeof(irObstacleSensor[0])));
+	irObstacleSensorActivity = new IRObstacleSensorActivity(avrMicroRepository,irObstacleSensor,(sizeof(irObstacleSensor)/sizeof(irObstacleSensor[0])));
 
 	carTrackBusinessLayer = new CarTrackBusinessLayer(irObstacleSensorActivity,avrMicroRepository);
 }
