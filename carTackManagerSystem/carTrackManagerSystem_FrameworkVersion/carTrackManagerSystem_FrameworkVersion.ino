@@ -50,15 +50,17 @@ VL53L0XActivity* vl53L0XActivity;
 DigitalPort* irObstaclePorts[2];
 DigitalPortSensor* irObstacleSensor[1]{};
 
-I2COstacleSensor* listOfi2COstacleSensor[1];
+I2COstacleSensor* listOfi2COstacleSensor[2];
 
 // the setup function runs once when you press reset or power the board
 void setup() {
 	Serial.println("RESTART");
 
-	listOfi2COstacleSensor[0] = new I2COstacleSensor(41, "irObstPort1", 50);
+	listOfi2COstacleSensor[0] = new I2COstacleSensor(41,70,300);
 	listOfi2COstacleSensor[0]->enable(true);
-	listOfi2COstacleSensor[0]->_minDistanceToObstacle = 50;
+
+	listOfi2COstacleSensor[1] = new I2COstacleSensor(42, 70, 300);
+	listOfi2COstacleSensor[1]->enable(true);
 
 	irObstaclePorts[0] = new DigitalPort("irObstPort1", IR_OSTACLE_PIN);
 	irObstaclePorts[0]->direction = DigitalPort::PortDirection::input;
@@ -77,13 +79,11 @@ void setup() {
 
 	irObstacleSensorActivity = new IRObstacleSensorActivity(avrMicroRepository,irObstacleSensor,(sizeof(irObstacleSensor)/sizeof(irObstacleSensor[0])));
 	
-	vl53L0XRepository.init(41);
-	
 	vl53L0XActivity = new VL53L0XActivity(vl53L0XRepository, listOfi2COstacleSensor, sizeof(listOfi2COstacleSensor) / sizeof(listOfi2COstacleSensor[0]));
 	
-	//carTrackBusinessLayer = new CarTrackBusinessLayer(vl53L0XActivity,avrMicroRepository);
+	carTrackBusinessLayer = new CarTrackBusinessLayer(vl53L0XActivity,avrMicroRepository);
 
-	carTrackBusinessLayer = new CarTrackBusinessLayer(irObstacleSensorActivity, avrMicroRepository);
+	//carTrackBusinessLayer = new CarTrackBusinessLayer(irObstacleSensorActivity, avrMicroRepository);
 }
 
 void loop() {
