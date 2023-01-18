@@ -31,10 +31,10 @@ void CarTrackBusinessLayer::startRace()
 			Serial.print("lap : "); Serial.println(laps);
 #endif
 		}
-		#ifdef _DEBUG
+	/*	#ifdef _DEBUG
 				char d[10] = {};
 				Serial.print("ram:"); Serial.println(itoa(this->avrMicroRepository->getFreeRam(), d, 10));
-		#endif
+		#endif*/
 	}
 	numbersOfActualRaceLap = 0;
 }

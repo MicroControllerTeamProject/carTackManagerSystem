@@ -39,7 +39,7 @@ enum RaceStatus : uint8_t
 };
 
 LiquidCrystal_I2C lcd(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);  // Set the LCD I2C address, if it's not working try 0x27.
-VL53L0X sensor;
+VL53L0X _sensor;
 
 unsigned long startMillis = 0;
 unsigned long elapsedMillis = 0;
@@ -63,21 +63,21 @@ void setup()
 	Serial.begin(9600);
 	Wire.begin();
 	pinMode(pinLed, OUTPUT);
-	if (!sensor.init())
+	if (!_sensor.init())
 	{
 		Serial.println(F("error sensor!"));
 		while (1) {}
 	}
 
-	Serial.print("sensor.getAddress() : " ); Serial.println(sensor.getAddress());
+	Serial.print("sensor.getAddress() : " ); Serial.println(_sensor.getAddress());
 
 	// Start continuous back-to-back mode (take readings as
 	// fast as possible).  To use continuous timed mode
 	// instead, provide a desired inter-measurement period in
-	// ms (e.g. sensor.startContinuous(100)).
-	/*sensor.startContinuous();*/
-	sensor.setMeasurementTimingBudget(20000);
-	sensor.startContinuous();
+	// ms (e.g. _sensor.startContinuous(100)).
+	/*_sensor.startContinuous();*/
+	_sensor.setMeasurementTimingBudget(20000);
+	_sensor.startContinuous();
 	lcd.begin(16, 2);   // iInit the LCD for 16 chars 2 lines
 	lcd.backlight();   // Turn on the backligt (try lcd.noBaklight() to turn it off)
 }
@@ -153,8 +153,8 @@ void soundStartRace()
 
 void detectTransitCar()
 {
-	int distance = sensor.readRangeContinuousMillimeters();
-	if (sensor.timeoutOccurred()) { lcdPrintMessage(F("sensor error"), 0, 4,false); }
+	int distance = _sensor.readRangeContinuousMillimeters();
+	if (_sensor.timeoutOccurred()) { lcdPrintMessage(F("sensor error"), 0, 4,false); }
 	if ((distance < 100 && distance > 10) )
 	{
 		if (lapStatus == LapStatus::outLap && lap == qualifyNumberLaps) {
@@ -297,14 +297,14 @@ void raceManager()
 
 bool isCarTransit()
 {
-	if (sensor.timeoutOccurred()) { lcdPrintMessage(F("sensor error"), 0, 4, false); }
-	int distance = sensor.readRangeContinuousMillimeters();
+	if (_sensor.timeoutOccurred()) { lcdPrintMessage(F("sensor error"), 0, 4, false); }
+	int distance = _sensor.readRangeContinuousMillimeters();
 	if ((distance < 60 && distance > 10))
 	{
 		digitalWrite(9, HIGH);
 		delay(1000);
 		digitalWrite(9, LOW);
-		distance = sensor.readRangeContinuousMillimeters();
+		distance = _sensor.readRangeContinuousMillimeters();
 		if(distance > 100) return true;
 	}
 	return false;
