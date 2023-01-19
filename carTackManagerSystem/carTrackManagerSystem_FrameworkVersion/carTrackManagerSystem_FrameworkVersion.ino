@@ -72,7 +72,6 @@ void setup() {
 	irObstaclePorts[1]->alarmTriggerOn = DigitalPort::AlarmOn::low;
 	irObstaclePorts[1]->isOnPullUp = true;
 
-
 	irObstacleSensor[0] = new DigitalPortSensor(irObstaclePorts,sizeof(irObstaclePorts) / sizeof(irObstaclePorts[0]));
 	irObstacleSensor[0]->setUid("Obs.Sens.01");
 	irObstacleSensor[0]->enable(true);
