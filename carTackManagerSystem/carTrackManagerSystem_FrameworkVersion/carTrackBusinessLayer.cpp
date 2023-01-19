@@ -31,17 +31,17 @@ void CarTrackBusinessLayer::startRace()
 			Serial.print("lap : "); Serial.println(laps);
 #endif
 		}
-	/*	#ifdef _DEBUG
-				char d[10] = {};
-				Serial.print("ram:"); Serial.println(itoa(this->avrMicroRepository->getFreeRam(), d, 10));
-		#endif*/
+		//#ifdef _DEBUG
+		//		char d[10] = {};
+		//		Serial.print("ram:"); Serial.println(itoa(this->avrMicroRepository->getFreeRam(), d, 10));
+		//#endif
 	}
 	numbersOfActualRaceLap = 0;
 }
 
 bool CarTrackBusinessLayer::isDetectedTransitCar()
 {
-	return this->_interfaceObstacleActivity->isObstacleDetected("irObstPort1");
+	return this->_interfaceObstacleActivity->isObstacleDetected("41");
 }
 
 

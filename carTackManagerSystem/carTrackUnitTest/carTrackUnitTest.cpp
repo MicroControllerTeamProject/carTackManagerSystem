@@ -1,17 +1,18 @@
 
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\AvrMicroRepository.h"
-#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\RFReceiverRepository.h"
-#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\LiquidCristalI2CRepository.h"
+//#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\RFReceiverRepository.h"
+//#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\LiquidCristalI2CRepository.h"
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\model\DigitalPort.h"
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\model\AnalogPort.h"
-#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\SwitchActivity.h"
+//#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\SwitchActivity.h"
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\DeviceActivity.h"
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\IRObstacleSensorActivity.h"
-#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\LiquidCristalI2cActivity.h"
-#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\RFReceiverActivity.h"
-#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\BuzzerActivity.h"
+//#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\LiquidCristalI2cActivity.h"
+//#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\RFReceiverActivity.h"
+//#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\BuzzerActivity.h"
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\interfaces\InterfaceObstacleActivity.h"
 #include "..\carTrackManagerSystem_FrameworkVersion\CarTrackBusinessLayer.h"
+#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\objectsSensor\DigitalPortSensor.h"
 
 #include "pch.h"
 #include "CppUnitTest.h"
@@ -44,7 +45,7 @@ namespace carTrackUnitTest
 			When(Method(mockedAvrMicroRepository, digitalReadm)).AlwaysReturn(0);
 			When(Method(mockedAvrMicroRepository, pinMode_m)).AlwaysReturn();
 			
-			InterfaceObstacleActivity* iRObstacleSensorActivity = new IRObstacleSensorActivity(mainRepository,irObstaclePort);
+			InterfaceObstacleActivity* iRObstacleSensorActivity = new IRObstacleSensorActivity(mainRepository,irObstaclePort,2);
 
 			bool z = (iRObstacleSensorActivity->isObstacleDetected("IrOb1"));
 
