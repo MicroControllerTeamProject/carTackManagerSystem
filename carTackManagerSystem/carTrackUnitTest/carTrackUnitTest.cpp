@@ -13,6 +13,7 @@
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\interfaces\InterfaceObstacleActivity.h"
 #include "..\carTrackManagerSystem_FrameworkVersion\CarTrackBusinessLayer.h"
 #include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\objectsSensor\DigitalPortSensor.h"
+#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\objectsSensor\AnalogPortSensor.h"
 
 #include "pch.h"
 #include "CppUnitTest.h"
@@ -31,23 +32,33 @@ namespace carTrackUnitTest
 			Mock<AvrMicroRepository> mockedAvrMicroRepository;
 			AvrMicroRepository& mainRepository = mockedAvrMicroRepository.get();
 
-			DigitalPort* irObstaclePort[2];
-			irObstaclePort[0] = new DigitalPort("IrOb1", 4);
-			irObstaclePort[0]->alarmTriggerOn = DigitalPort::AlarmOn::low;
-			irObstaclePort[0]->direction = DigitalPort::PortDirection::input;
-
-	
-			irObstaclePort[1] = new DigitalPort("IrOb2", 4);
-			irObstaclePort[1]->alarmTriggerOn = DigitalPort::AlarmOn::high;
-			irObstaclePort[1]->direction = DigitalPort::PortDirection::input;
-
-
-			When(Method(mockedAvrMicroRepository, digitalReadm)).AlwaysReturn(0);
-			When(Method(mockedAvrMicroRepository, pinMode_m)).AlwaysReturn();
+			IRObstacleSensorActivity* irObstacleSensorActivity;
 			
-			InterfaceObstacleActivity* iRObstacleSensorActivity = new IRObstacleSensorActivity(mainRepository,irObstaclePort,2);
+			DigitalPort* irObstaclePorts[2] = {};
 
-			bool z = (iRObstacleSensorActivity->isObstacleDetected("IrOb1"));
+			DigitalPortSensor* irObstacleSensor[1]{};
+
+			irObstaclePorts[0] = new DigitalPort("irObstPort1", 7);
+			irObstaclePorts[0]->direction = DigitalPort::PortDirection::input;
+			irObstaclePorts[0]->alarmTriggerOn = DigitalPort::AlarmOn::low;
+			irObstaclePorts[0]->isOnPullUp = true;
+
+			irObstaclePorts[1] = new DigitalPort("irObstPort2", 7);
+			irObstaclePorts[1]->direction = DigitalPort::PortDirection::input;
+			irObstaclePorts[1]->alarmTriggerOn = DigitalPort::AlarmOn::low;
+			irObstaclePorts[1]->isOnPullUp = true;
+
+			irObstacleSensor[0] = new DigitalPortSensor("Obs.Sens.01", irObstaclePorts, sizeof(irObstaclePorts) / sizeof(irObstaclePorts[0]));
+			/*irObstacleSensor[0]->setUid("Obs.Sens.01");*/
+			irObstacleSensor[0]->enable(true);
+
+			When(Method(mockedAvrMicroRepository, digitalReadm)).Return(0,1);
+			When(Method(mockedAvrMicroRepository, pinMode_m)).AlwaysReturn();
+			When(Method(mockedAvrMicroRepository, delaym)).AlwaysReturn();
+
+			irObstacleSensorActivity = new IRObstacleSensorActivity(mainRepository, irObstacleSensor, (sizeof(irObstacleSensor) / sizeof(irObstacleSensor[0])));
+			
+			bool z = (irObstacleSensorActivity->isObstacleDetected("irObstPort1"));
 
 			Assert::AreEqual(true, z);
 		}
