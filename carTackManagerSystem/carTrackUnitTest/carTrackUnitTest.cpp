@@ -43,11 +43,6 @@ namespace carTrackUnitTest
 			irObstaclePorts[0]->alarmTriggerOn = DigitalPort::AlarmOn::low;
 			irObstaclePorts[0]->isOnPullUp = true;
 
-			irObstaclePorts[1] = new DigitalPort("irObstPort2", 7);
-			irObstaclePorts[1]->direction = DigitalPort::PortDirection::input;
-			irObstaclePorts[1]->alarmTriggerOn = DigitalPort::AlarmOn::low;
-			irObstaclePorts[1]->isOnPullUp = true;
-
 			irObstacleSensor[0] = new DigitalPortSensor("Obs.Sens.01", irObstaclePorts, sizeof(irObstaclePorts) / sizeof(irObstaclePorts[0]));
 			/*irObstacleSensor[0]->setUid("Obs.Sens.01");*/
 			irObstacleSensor[0]->enable(true);
@@ -58,9 +53,11 @@ namespace carTrackUnitTest
 
 			irObstacleSensorActivity = new IRObstacleSensorActivity(mainRepository, irObstacleSensor, (sizeof(irObstacleSensor) / sizeof(irObstacleSensor[0])));
 			
-			bool z = (irObstacleSensorActivity->isObstacleDetected("irObstPort1"));
+			CarTrackBusinessLayer carTrackBusinessLayer(irObstacleSensorActivity, mainRepository); 
 
-			Assert::AreEqual(true, z);
+			bool returnValue = carTrackBusinessLayer.isDetectedTransitCar("irObstPort1");
+
+			Assert::AreEqual(true, returnValue);
 		}
 	};
 }

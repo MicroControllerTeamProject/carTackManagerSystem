@@ -14,7 +14,7 @@ public:
 	CarTrackBusinessLayer(
 		InterfaceObstacleActivity* irObstacleSensorActivity,AvrMicroRepository& avrMicroRepository
 	);
-	bool isDetectedTransitCar();
+	bool isDetectedTransitCar(char* sensorUid);
 	void startRace();
 	
 private:

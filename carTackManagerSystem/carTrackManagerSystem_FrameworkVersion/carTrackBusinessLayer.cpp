@@ -21,8 +21,7 @@ void CarTrackBusinessLayer::startRace()
 {
 	while (numbersOfActualRaceLap < numbersOfTotalRaceLap)
 	{
-
-		if (isDetectedTransitCar())
+		if (isDetectedTransitCar("carTrans"))
 		{
 			char laps[10] = {};
 			numbersOfActualRaceLap++;
@@ -39,9 +38,9 @@ void CarTrackBusinessLayer::startRace()
 	numbersOfActualRaceLap = 0;
 }
 
-bool CarTrackBusinessLayer::isDetectedTransitCar()
+bool CarTrackBusinessLayer::isDetectedTransitCar(char* sensorUid)
 {
-	return this->_interfaceObstacleActivity->isObstacleDetected("41");
+	return this->_interfaceObstacleActivity->isObstacleDetected(sensorUid);
 }
 
 

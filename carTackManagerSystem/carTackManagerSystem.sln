@@ -47,6 +47,7 @@ Global
 		{54583348-2FD7-45ED-ADAA-D85BE7252DDD}.Debug|x86.Build.0 = Debug|Win32
 		{54583348-2FD7-45ED-ADAA-D85BE7252DDD}.Release|ARM.ActiveCfg = Release|Win32
 		{54583348-2FD7-45ED-ADAA-D85BE7252DDD}.Release|x64.ActiveCfg = Release|x64
+		{54583348-2FD7-45ED-ADAA-D85BE7252DDD}.Release|x64.Build.0 = Release|x64
 		{54583348-2FD7-45ED-ADAA-D85BE7252DDD}.Release|x86.ActiveCfg = Release|Win32
 		{54583348-2FD7-45ED-ADAA-D85BE7252DDD}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection

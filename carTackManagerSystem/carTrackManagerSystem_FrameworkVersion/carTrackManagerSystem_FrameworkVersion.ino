@@ -56,33 +56,28 @@ I2COstacleSensor* listOfi2COstacleSensor[2];
 void setup() {
 	Serial.println("RESTART");
 
-	listOfi2COstacleSensor[0] = new I2COstacleSensor(41,70,300);
+	listOfi2COstacleSensor[0] = new I2COstacleSensor("carTrans",41,70,300);
 	listOfi2COstacleSensor[0]->enable(true);
 
-	listOfi2COstacleSensor[1] = new I2COstacleSensor(42, 70, 300);
+	listOfi2COstacleSensor[1] = new I2COstacleSensor("busTrans",42, 70, 300);
 	listOfi2COstacleSensor[1]->enable(true);
 
-	irObstaclePorts[0] = new DigitalPort("irObstPort1", IR_OSTACLE_PIN);
+	irObstaclePorts[0] = new DigitalPort("port7", IR_OSTACLE_PIN);
 	irObstaclePorts[0]->direction = DigitalPort::PortDirection::input;
 	irObstaclePorts[0]->alarmTriggerOn = DigitalPort::AlarmOn::low;
 	irObstaclePorts[0]->isOnPullUp = true;
 
-	irObstaclePorts[1] = new DigitalPort("irObstPort2", IR_OSTACLE_PIN);
-	irObstaclePorts[1]->direction = DigitalPort::PortDirection::input;
-	irObstaclePorts[1]->alarmTriggerOn = DigitalPort::AlarmOn::low;
-	irObstaclePorts[1]->isOnPullUp = true;
-
-	irObstacleSensor[0] = new DigitalPortSensor("Obs.Sens.01",irObstaclePorts,sizeof(irObstaclePorts) / sizeof(irObstaclePorts[0]));
+	irObstacleSensor[0] = new DigitalPortSensor("carTrans",irObstaclePorts,sizeof(irObstaclePorts) / sizeof(irObstaclePorts[0]));
 	/*irObstacleSensor[0]->setUid("Obs.Sens.01");*/
 	irObstacleSensor[0]->enable(true);
 
 	irObstacleSensorActivity = new IRObstacleSensorActivity(avrMicroRepository,irObstacleSensor,(sizeof(irObstacleSensor)/sizeof(irObstacleSensor[0])));
 	
-	vl53L0XActivity = new VL53L0XActivity(vl53L0XRepository, listOfi2COstacleSensor, sizeof(listOfi2COstacleSensor) / sizeof(listOfi2COstacleSensor[0]));
-	
-	carTrackBusinessLayer = new CarTrackBusinessLayer(vl53L0XActivity,avrMicroRepository);
+	//vl53L0XActivity = new VL53L0XActivity(vl53L0XRepository, listOfi2COstacleSensor, sizeof(listOfi2COstacleSensor) / sizeof(listOfi2COstacleSensor[0]));
+	//
+	//carTrackBusinessLayer = new CarTrackBusinessLayer(vl53L0XActivity,avrMicroRepository);
 
-	//carTrackBusinessLayer = new CarTrackBusinessLayer(irObstacleSensorActivity, avrMicroRepository);
+	carTrackBusinessLayer = new CarTrackBusinessLayer(irObstacleSensorActivity, avrMicroRepository);
 }
 
 void loop() {
