@@ -156,13 +156,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Libraries\lsgNewFramework\activity\DeviceActivity.cpp" />
-    <ClCompile Include="..\..\..\Libraries\lsgNewFramework\activity\IRObstacleSensorActivity.cpp" />
-    <ClCompile Include="..\..\..\Libraries\lsgNewFramework\commons\commonsLayer.cpp" />
-    <ClCompile Include="..\..\..\Libraries\lsgNewFramework\model\AnalogPort.cpp" />
-    <ClCompile Include="..\..\..\Libraries\lsgNewFramework\model\DigitalPort.cpp" />
-    <ClCompile Include="..\..\..\Libraries\lsgNewFramework\objectsSensor\AnalogPortSensor.cpp" />
-    <ClCompile Include="..\..\..\Libraries\lsgNewFramework\objectsSensor\DigitalPortSensor.cpp" />
+    <ClCompile Include="..\..\..\ActivityFramework\activity\DeviceActivity.cpp" />
+    <ClCompile Include="..\..\..\ActivityFramework\activity\IRObstacleSensorActivity.cpp" />
+    <ClCompile Include="..\..\..\ActivityFramework\commons\commonsLayer.cpp" />
+    <ClCompile Include="..\..\..\ActivityFramework\model\AnalogPort.cpp" />
+    <ClCompile Include="..\..\..\ActivityFramework\model\DigitalPort.cpp" />
+    <ClCompile Include="..\..\..\ActivityFramework\objectsSensor\AnalogPortSensor.cpp" />
+    <ClCompile Include="..\..\..\ActivityFramework\objectsSensor\DigitalPortSensor.cpp" />
     <ClCompile Include="..\carTrackManagerSystem_FrameworkVersion\CarTrackBusinessLayer.cpp" />
     <ClCompile Include="carTrackUnitTest.cpp" />
     <ClCompile Include="pch.cpp">

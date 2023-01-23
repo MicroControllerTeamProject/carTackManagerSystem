@@ -1,19 +1,19 @@
 
-#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\AvrMicroRepository.h"
+#include "\Repos\MicroControllerTeamProject\ActivityFramework\repository\AvrMicroRepository.h"
 //#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\RFReceiverRepository.h"
 //#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\LiquidCristalI2CRepository.h"
-#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\model\DigitalPort.h"
-#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\model\AnalogPort.h"
+#include "\Repos\MicroControllerTeamProject\ActivityFramework\model\DigitalPort.h"
+#include "\Repos\MicroControllerTeamProject\ActivityFramework\model\AnalogPort.h"
 //#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\SwitchActivity.h"
-#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\DeviceActivity.h"
-#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\IRObstacleSensorActivity.h"
+#include "\Repos\MicroControllerTeamProject\ActivityFramework\activity\DeviceActivity.h"
+#include "\Repos\MicroControllerTeamProject\ActivityFramework\activity\IRObstacleSensorActivity.h"
 //#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\LiquidCristalI2cActivity.h"
 //#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\RFReceiverActivity.h"
 //#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\BuzzerActivity.h"
-#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\interfaces\InterfaceObstacleActivity.h"
+#include "\Repos\MicroControllerTeamProject\ActivityFramework\interfaces\InterfaceObstacleActivity.h"
 #include "..\carTrackManagerSystem_FrameworkVersion\CarTrackBusinessLayer.h"
-#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\objectsSensor\DigitalPortSensor.h"
-#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\objectsSensor\AnalogPortSensor.h"
+#include "\Repos\MicroControllerTeamProject\ActivityFramework\objectsSensor\DigitalPortSensor.h"
+#include "\Repos\MicroControllerTeamProject\ActivityFramework\objectsSensor\AnalogPortSensor.h"
 
 #include "pch.h"
 #include "CppUnitTest.h"
@@ -43,7 +43,7 @@ namespace carTrackUnitTest
 			irObstaclePorts[0]->alarmTriggerOn = DigitalPort::AlarmOn::low;
 			irObstaclePorts[0]->isOnPullUp = true;
 
-			irObstacleSensor[0] = new DigitalPortSensor("Obs.Sens.01", irObstaclePorts, sizeof(irObstaclePorts) / sizeof(irObstaclePorts[0]));
+			irObstacleSensor[0] = new DigitalPortSensor("carTrans", irObstaclePorts, sizeof(irObstaclePorts) / sizeof(irObstaclePorts[0]));
 			/*irObstacleSensor[0]->setUid("Obs.Sens.01");*/
 			irObstacleSensor[0]->enable(true);
 
@@ -55,7 +55,7 @@ namespace carTrackUnitTest
 			
 			CarTrackBusinessLayer carTrackBusinessLayer(irObstacleSensorActivity, mainRepository); 
 
-			bool returnValue = carTrackBusinessLayer.isDetectedTransitCar("irObstPort1");
+			bool returnValue = carTrackBusinessLayer.isDetectedTransitCar("carTrans");
 
 			Assert::AreEqual(true, returnValue);
 		}

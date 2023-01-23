@@ -15,22 +15,23 @@
 //extern int __brkval;
 //int temp;
 
+#include <SoftwareSerial.h>
 #include <VL53L0X.h>
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
-#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\AvrMicroRepository.h>
-#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\VL53L0XRepository.h>
-#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\RFReceiverRepository.h>
-#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\LiquidCristalI2CRepository.h>
-#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\LiquidCristalI2cActivity.h>
-#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\SwitchActivity.h>
-#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\RFReceiverActivity.h>
-#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\BuzzerActivity.h>
-#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\VL53L0XActivity.h>
-#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\model\DigitalPort.h>
-#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\interfaces\InterfaceObstacleActivity.h>
-#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\objectsSensor\DigitalPortSensor.h>
-#include <\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\objectsSensor\I2COstacleSensor.h>
+#include <\Repos\MicroControllerTeamProject\ActivityFramework\repository\AvrMicroRepository.h>
+#include <\Repos\MicroControllerTeamProject\ActivityFramework\repository\VL53L0XRepository.h>
+#include <\Repos\MicroControllerTeamProject\ActivityFramework\repository\RFReceiverRepository.h>
+#include <\Repos\MicroControllerTeamProject\ActivityFramework\repository\LiquidCristalI2CRepository.h>
+#include <\Repos\MicroControllerTeamProject\ActivityFramework\activity\LiquidCristalI2cActivity.h>
+#include <\Repos\MicroControllerTeamProject\ActivityFramework\activity\SwitchActivity.h>
+#include <\Repos\MicroControllerTeamProject\ActivityFramework\activity\RFReceiverActivity.h>
+#include <\Repos\MicroControllerTeamProject\ActivityFramework\activity\BuzzerActivity.h>
+#include <\Repos\MicroControllerTeamProject\ActivityFramework\activity\VL53L0XActivity.h>
+#include <\Repos\MicroControllerTeamProject\ActivityFramework\model\DigitalPort.h>
+#include <\Repos\MicroControllerTeamProject\ActivityFramework\interfaces\InterfaceObstacleActivity.h>
+#include <\Repos\MicroControllerTeamProject\ActivityFramework\objectsSensor\DigitalPortSensor.h>
+#include <\Repos\MicroControllerTeamProject\ActivityFramework\objectsSensor\I2COstacleSensor.h>
 #include <stdint.h>
 #include "CarTrackBusinessLayer.h"
 

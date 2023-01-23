@@ -1,11 +1,11 @@
 #pragma once
-#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\IRObstacleSensorActivity.h"
-#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\LiquidCristalI2cActivity.h"
-#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\SwitchActivity.h"
-#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\RFReceiverActivity.h"
-#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\activity\BuzzerActivity.h"
-#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\repository\AvrMicroRepository.h"
-#include "\Repos\MicroControllerTeamProject\Libraries\lsgNewFramework\interfaces\InterfaceObstacleActivity.h"
+#include "\Repos\MicroControllerTeamProject\ActivityFramework\activity\IRObstacleSensorActivity.h"
+#include "\Repos\MicroControllerTeamProject\ActivityFramework\activity\LiquidCristalI2cActivity.h"
+#include "\Repos\MicroControllerTeamProject\ActivityFramework\activity\SwitchActivity.h"
+#include "\Repos\MicroControllerTeamProject\ActivityFramework\activity\RFReceiverActivity.h"
+#include "\Repos\MicroControllerTeamProject\ActivityFramework\activity\BuzzerActivity.h"
+#include "\Repos\MicroControllerTeamProject\ActivityFramework\repository\AvrMicroRepository.h"
+#include "\Repos\MicroControllerTeamProject\ActivityFramework\interfaces\InterfaceObstacleActivity.h"
 
 
 class CarTrackBusinessLayer
