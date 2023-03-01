@@ -17,6 +17,8 @@ range measurements with the VL53L0X. It is based on
 vl53l0x_ContinuousRanging_Example.c from the VL53L0X API.
 The range readings are in units of mm. */
 
+//lsgSoftware
+
 #include <Wire.h>
 #include <VL53L0X.h>
 #include <LiquidCrystal_I2C.h>
