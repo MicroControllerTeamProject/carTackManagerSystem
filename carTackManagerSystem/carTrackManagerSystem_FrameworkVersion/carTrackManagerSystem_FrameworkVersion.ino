@@ -42,7 +42,7 @@
 #define IR_OSTACLE_PIN 7
 #define BUZZER_PIN 8
 
-AvrMicroRepository avrMicroRepository;
+AvrMicroRepository avrMicroRepository(19200);
 VL53L0XRepository vl53L0XRepository;
 CarTrackBusinessLayer* carTrackBusinessLayer;
 IRObstacleSensorActivity* irObstacleSensorActivity;
